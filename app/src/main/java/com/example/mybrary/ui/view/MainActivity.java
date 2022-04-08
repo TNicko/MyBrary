@@ -1,4 +1,4 @@
-package com.example.mybrary.ui.activity;
+package com.example.mybrary.ui.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
