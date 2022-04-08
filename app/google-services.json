@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "273349203876",
+    "project_id": "mybrary-f1a76",
+    "storage_bucket": "mybrary-f1a76.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:273349203876:android:84f83f17e6b445f8911331",
+        "android_client_info": {
+          "package_name": "com.example.mybrary"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "273349203876-lnh7jo71q2f1ms4fujjftler1uurc8mb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD050KItvY_CEZ5qlD-ssGndE7HzWadK4U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "273349203876-lnh7jo71q2f1ms4fujjftler1uurc8mb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
