@@ -1,4 +1,4 @@
-package com.example.mybrary.data.model;
+package com.example.mybrary.domain.model;
 
 public class Word {
 

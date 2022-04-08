@@ -8,7 +8,7 @@ import com.google.firebase.database.Query;
 
 import java.util.HashMap;
 
-public class WordDAO implements WordRepository {
+public class WordDAO {
 
     private final DatabaseReference dbReference;
 
@@ -17,26 +17,22 @@ public class WordDAO implements WordRepository {
         dbReference = db.getReference(Word.class.getSimpleName()).child(folderName);
     }
 
-    // Get Words
-    @Override
-    public Query get() {
+    // Get all words
+    public Query getAll() {
         return dbReference.orderByKey();
     }
 
-    // Add Word
-    @Override
+    // Add word
     public Task<Void> add(Word word) {
         return dbReference.push().setValue(word);
     }
 
-    // Update Word
-    @Override
+    // Update word
     public Task<Void> update(String key, HashMap<String, Object> hashMap) {
         return dbReference.child(key).updateChildren(hashMap);
     }
 
-    // Remove Word
-    @Override
+    // Remove word
     public Task<Void> remove(String key) {
         return dbReference.child(key).removeValue();
     }

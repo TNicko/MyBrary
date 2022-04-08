@@ -7,16 +7,12 @@ import java.util.HashMap;
 
 public interface FolderRepository {
 
-    // Get Folder
-    public Query get();
+    public Object getAllFolders();
 
-    // Add Folder
-    public Task<Void> add(Folder folder);
+    public void addFolder(Folder folder);
 
-    // Edit Folder
-    public Task<Void> update(String key, HashMap<String, Object> hashMap);
+    public void updateFolder(String key, HashMap<String, Object> hashMap);
 
-    // Remove Folder
-    public Task<Void> remove(String key);
+    public void removeFolder(String key);
 
 }

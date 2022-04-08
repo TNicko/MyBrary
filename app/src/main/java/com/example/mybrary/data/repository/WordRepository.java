@@ -7,16 +7,16 @@ import java.util.HashMap;
 
 public interface WordRepository {
 
-    // Get Word
-    public Query get();
+    // Get all words
+    public Query getAll();
 
-    // Add Word
+    // Add word
     public Task<Void> add(Word word);
 
-    // Edit Word
+    // Edit word
     public Task<Void> update(String key, HashMap<String, Object> hashMap);
 
-    // Remove Word
+    // Remove word
     public Task<Void> remove(String key);
 
 }

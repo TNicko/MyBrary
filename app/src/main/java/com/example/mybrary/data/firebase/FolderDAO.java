@@ -8,7 +8,7 @@ import com.google.firebase.database.Query;
 
 import java.util.HashMap;
 
-public class FolderDAO implements FolderRepository {
+public class FolderDAO {
 
     private final DatabaseReference dbReference;
 
@@ -18,22 +18,22 @@ public class FolderDAO implements FolderRepository {
         dbReference = db.getReference(Folder.class.getSimpleName());
     }
 
-    @Override
-    public Query get() {
+    // Get All folders
+    public Query getAll() {
         return dbReference.orderByKey();
     }
 
-    @Override
+    // Add folder
     public Task<Void> add(Folder folder) {
         return dbReference.push().setValue(folder);
     }
 
-    @Override
+    // Update folder
     public Task<Void> update(String key, HashMap<String, Object> hashMap) {
         return dbReference.child(key).updateChildren(hashMap);
     }
 
-    @Override
+    // Remove folder
     public Task<Void> remove(String key) {
         return dbReference.child(key).removeValue();
     }
