@@ -63,7 +63,7 @@
         android:id="@+id/buttonLayout">
 
         <Button
-            android:id="@+id/wpCreateBtn"
+            android:id="@+id/saveBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/save_btn"
@@ -72,7 +72,7 @@
             android:theme="@style/MyButtons" />
 
         <Button
-            android:id="@+id/wpCancelBtn"
+            android:id="@+id/cancelBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cancel_btn"
