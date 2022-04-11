@@ -21,15 +21,15 @@ public class FolderDAO{
     private final DatabaseReference dbReference;
 
     public FolderDAO() {
-
         FirebaseDatabase db = FirebaseDatabase.getInstance();
-        dbReference = db.getReference(Folder.class.getSimpleName());
+        dbReference = db.getReference("Folder");
     }
 
     // Get all folders
     public List<Folder> getAllFolders() {
+        System.out.println("getting folders...");
         List<Folder> folders = new ArrayList<>();
-        dbReference.addValueEventListener(new ValueEventListener() {
+        dbReference.orderByKey().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot data : snapshot.getChildren()) {

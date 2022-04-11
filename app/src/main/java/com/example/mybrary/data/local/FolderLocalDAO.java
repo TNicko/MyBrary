@@ -11,8 +11,8 @@ import com.google.android.gms.tasks.Task;
 import java.util.HashMap;
 import java.util.List;
 
-
-public class FolderLocalDAO{
+@Dao
+public abstract class FolderLocalDAO{
 
 
 }

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MyBrary</string>
+    <string name="add_folder_btn">AddFolderBtn</string>
 </resources>
