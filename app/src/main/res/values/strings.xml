@@ -1,4 +1,21 @@
 <resources>
     <string name="app_name">MyBrary</string>
+
+    <!--  Main Activity -->
     <string name="add_folder_btn">AddFolderBtn</string>
+
+    <!--  Folder Activity -->
+    <string name="folder_title_hint">Folder title</string>
+    <string name="add_word_btn">Add word</string>
+
+    <!-- New Folder Activity-->
+
+    <!-- New Word Activity -->
+    <string name="word_hint">New word</string>
+    <string name="translation_hint">Translation</string>
+    <string name="notes_hint">Notes</string>
+    <string name="reviewable">Reviewable</string>
+
+    <string name="cancel_btn">Cancel</string>
+    <string name="save_btn">Save</string>
 </resources>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.view.NewWordActivity"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/wpName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:hint="@string/word_hint"
+        android:gravity="center_horizontal"
+        android:textSize="24sp"
+        android:importantForAutofill="no"
+        android:inputType= "none" />
+
+    <EditText
+        android:id="@+id/wpTranslation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:hint="@string/translation_hint"
+        android:gravity="center_horizontal"
+        android:textSize="24sp"
+        android:layout_below="@+id/wpName"
+        android:importantForAutofill="no"
+        android:inputType= "none"/>
+
+    <EditText
+        android:id="@+id/wpNotes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:hint="@string/notes_hint"
+        android:gravity="center_horizontal"
+        android:textSize="24sp"
+        android:layout_below="@id/wpTranslation"
+        android:importantForAutofill="no"
+        android:inputType= "none"/>
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/wpSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:layout_margin="40dp"
+        android:layout_below="@id/wpNotes"
+        android:text="@string/reviewable"
+        android:textSize="20sp"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/wpNotes"
+        android:layout_marginTop="100dp"
+        android:id="@+id/buttonLayout">
+
+        <Button
+            android:id="@+id/wpCreateBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/save_btn"
+            android:visibility="visible"
+            android:layout_marginEnd="30dp"
+            android:theme="@style/MyButtons" />
+
+        <Button
+            android:id="@+id/wpCancelBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel_btn"
+            android:layout_marginStart="30dp"
+            android:theme="@style/MyButtons"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

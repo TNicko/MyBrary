@@ -4,8 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable-anydpi/ic_add.xml" value="0.204" />
-        <entry key="app/src/main/res/layout/activity_folder.xml" value="0.26666666666666666" />
+        <entry key="app/src/main/res/layout/activity_folder.xml" value="0.2011444091796875" />
+        <entry key="app/src/main/res/layout/activity_folder2.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.26666666666666666" />
+        <entry key="app/src/main/res/layout/activity_new_folder.xml" value="0.18958333333333333" />
+        <entry key="app/src/main/res/layout/activity_new_word.xml" value="0.18958333333333333" />
         <entry key="app/src/main/res/layout/folder_list.xml" value="0.26666666666666666" />
         <entry key="app/src/main/res/layout/word_list.xml" value="0.26666666666666666" />
       </map>

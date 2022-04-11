@@ -5,7 +5,9 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.mybrary.R;
@@ -18,6 +20,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView folderRecView;
+    private FloatingActionButton addFolderBtn;
     private FolderRecViewAdapter folderAdapter;
     private final MainViewModel mainViewModel = new MainViewModel();
 
@@ -52,7 +55,28 @@ public class MainActivity extends AppCompatActivity {
         folderRecView.setAdapter(folderAdapter);
         folderRecView.setLayoutManager(new LinearLayoutManager(this));
 
+        // Add Folder Button
+        addFolderBtn = findViewById(R.id.addFolderBtn);
+        addFolderBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                newFolderActivity();
+            }
+        });
 
+    }
+
+    // Switch Activity -> FolderActivity
+    public void folderActivity(String folderName) {
+        Intent intent = new Intent(MainActivity.this, FolderActivity.class);
+        intent.putExtra("FOLDER_NAME", folderName);
+        this.startActivity(intent);
+    }
+
+    // Switch Activity -> NewFolderActivity
+    public void newFolderActivity() {
+        Intent intent = new Intent(MainActivity.this, NewFolderActivity.class);
+        this.startActivity(intent);
     }
 }
 

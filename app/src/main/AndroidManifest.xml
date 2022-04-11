@@ -13,6 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyBrary">
         <activity
+            android:name=".ui.view.NewFolderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.view.NewWordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.view.FolderActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.view.MainActivity"
             android:exported="true">
             <intent-filter>

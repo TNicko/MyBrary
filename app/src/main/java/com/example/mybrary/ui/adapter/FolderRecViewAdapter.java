@@ -12,14 +12,10 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mybrary.R;
-import com.example.mybrary.data.repository.FolderRepository;
-import com.example.mybrary.data.repository.WordRepository;
 import com.example.mybrary.domain.model.Folder;
 import com.example.mybrary.ui.view.FolderActivity;
 
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class FolderRecViewAdapter extends RecyclerView.Adapter<FolderRecViewAdapter.ViewHolder> {
 
