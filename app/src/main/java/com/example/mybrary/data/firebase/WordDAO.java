@@ -2,14 +2,11 @@ package com.example.mybrary.data.firebase;
 
 import androidx.annotation.NonNull;
 
-import com.example.mybrary.data.repository.WordRepository;
 import com.example.mybrary.domain.model.Word;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -60,17 +57,17 @@ public class WordDAO {
     }
 
     // Add word
-    public Task<Void> add(Word word) {
-        return dbReference.push().setValue(word);
+    public void add(Word word) {
+        dbReference.push().setValue(word);
     }
 
     // Update word
-    public Task<Void> update(String key, HashMap<String, Object> hashMap) {
-        return dbReference.child(key).updateChildren(hashMap);
+    public void update(String key, HashMap<String, Object> hashMap) {
+        dbReference.child(key).updateChildren(hashMap);
     }
 
     // Delete word
-    public Task<Void> delete(String key) {
-        return dbReference.child(key).removeValue();
+    public void delete(String key) {
+        dbReference.child(key).removeValue();
     }
 }

@@ -1,11 +1,17 @@
 package com.example.mybrary.data.repository;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.example.mybrary.data.firebase.FolderDAO;
 import com.example.mybrary.data.local.FolderLocalDAO;
 import com.example.mybrary.domain.model.Folder;
+import com.google.common.util.concurrent.FutureCallback;
+import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 public class FolderRepository {
 
@@ -18,7 +24,7 @@ public class FolderRepository {
 
     // Get All folders
     public List<Folder> getAllFolders() {
-        System.out.println("FOLDERS: "+remoteDao.getAllFolders());
+
         return remoteDao.getAllFolders();
     }
 

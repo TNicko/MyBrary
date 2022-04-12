@@ -1,5 +1,6 @@
 package com.example.mybrary.ui.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -16,10 +17,11 @@ import com.example.mybrary.domain.model.Folder;
 import com.example.mybrary.ui.view.FolderActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FolderRecViewAdapter extends RecyclerView.Adapter<FolderRecViewAdapter.ViewHolder> {
 
-    private ArrayList<Folder> folders = new ArrayList<>();
+    private List<Folder> folders = new ArrayList<>();
     private ArrayList<String> wordCount = new ArrayList<>();
 //    private ArrayList<String> reviewCount = new ArrayList<>();
     private final Context context;
@@ -27,6 +29,7 @@ public class FolderRecViewAdapter extends RecyclerView.Adapter<FolderRecViewAdap
 
     public FolderRecViewAdapter (Context context) {
         this.context = context;
+
     }
 
     @NonNull
@@ -41,7 +44,7 @@ public class FolderRecViewAdapter extends RecyclerView.Adapter<FolderRecViewAdap
         // Set Folder Name
         holder.txtName.setText(folders.get(position).getName());
         // Set Word Count
-        holder.txtWordNum.setText(wordCount.get(position));
+//        holder.txtWordNum.setText(wordCount.get(position));
         // !!! GetReviewCount() for each folder !!!
 
         holder.parent.setOnClickListener(new View.OnClickListener() {
@@ -66,8 +69,9 @@ public class FolderRecViewAdapter extends RecyclerView.Adapter<FolderRecViewAdap
         return folders.size();
     }
 
-    public void setFolders(ArrayList<Folder> folders) {
+    public void setFolders(List<Folder> folders) {
         this.folders = folders;
+        notifyDataSetChanged();
     }
 
     public void setWordCount(ArrayList<String> wordCount) {

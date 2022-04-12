@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView folderRecView;
     private FloatingActionButton addFolderBtn;
     private FolderRecViewAdapter folderAdapter;
-    private final MainViewModel mainViewModel = new MainViewModel();
+    private MainViewModel mainViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +49,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        mainViewModel = new MainViewModel();
+
         // Display Recycle View of all folders
         folderRecView = findViewById(R.id.folderRecView);
         folderAdapter = new FolderRecViewAdapter(this);
+        folderAdapter.setFolders(mainViewModel.folders);
+
         folderRecView.setAdapter(folderAdapter);
         folderRecView.setLayoutManager(new LinearLayoutManager(this));
 
