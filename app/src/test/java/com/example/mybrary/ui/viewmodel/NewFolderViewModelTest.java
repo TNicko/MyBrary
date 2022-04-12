@@ -2,7 +2,12 @@ package com.example.mybrary.ui.viewmodel;
 
 import static org.junit.Assert.*;
 
+import com.example.mybrary.domain.model.Folder;
+
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NewFolderViewModelTest {
 

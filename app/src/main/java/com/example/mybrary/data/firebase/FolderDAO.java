@@ -2,7 +2,6 @@ package com.example.mybrary.data.firebase;
 
 import androidx.annotation.NonNull;
 
-import com.example.mybrary.data.repository.FolderRepository;
 import com.example.mybrary.domain.model.Folder;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -56,8 +55,8 @@ public class FolderDAO{
     }
 
     // Add folder
-    public Task<Void> add(Folder folder) {
-        return dbReference.push().setValue(folder);
+    public void add(Folder folder) {
+        dbReference.push().setValue(folder);
     }
 
     // Delete folder

@@ -24,15 +24,18 @@ public class NewFolderActivity extends AppCompatActivity {
         saveBtn = findViewById(R.id.saveBtn);
         cancelBtn = findViewById(R.id.cancelBtn);
 
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
+        saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                System.out.println("Save Button Clicked");
                 TextInputEditText folderInputField =  findViewById(R.id.folderInput);
                 String folderInput = folderInputField.getText().toString();
                 // !!! pass to function in viewmodel
                 String checkOutput = newFolderViewModel.checkFolderInput(folderInput);
             }
         });
+
+
     }
 
     // Switch Activity -> MainActivity
