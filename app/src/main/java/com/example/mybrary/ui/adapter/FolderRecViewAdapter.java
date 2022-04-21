@@ -29,7 +29,6 @@ public class FolderRecViewAdapter extends RecyclerView.Adapter<FolderRecViewAdap
 
     public FolderRecViewAdapter (Context context) {
         this.context = context;
-
     }
 
     @NonNull
@@ -41,26 +40,25 @@ public class FolderRecViewAdapter extends RecyclerView.Adapter<FolderRecViewAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        // Set Folder Name
+        // Set info for recycle view
         holder.txtName.setText(folders.get(position).getName());
-        // Set Word Count
+        holder.parent.setTag(folders.get(position).getId());
 //        holder.txtWordNum.setText(wordCount.get(position));
         // !!! GetReviewCount() for each folder !!!
 
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TextView folderName1 = view.findViewById(R.id.txtName);
-                String folderName = folderName1.getText().toString();
-                folderActivity(folderName);
+                long folderId = (long) holder.parent.getTag();
+                folderActivity(folderId);
             }
         });
     }
 
     // Switch Activity -> FolderActivity
-    public void folderActivity(String folderName) {
+    public void folderActivity(long folderId) {
         Intent intent = new Intent(context, FolderActivity.class);
-        intent.putExtra("FOLDER_NAME", folderName);
+        intent.putExtra("FOLDER_ID", folderId);
         context.startActivity(intent);
     }
 

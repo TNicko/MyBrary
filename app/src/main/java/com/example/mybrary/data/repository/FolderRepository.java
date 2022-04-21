@@ -1,46 +1,75 @@
 package com.example.mybrary.data.repository;
 
-import androidx.lifecycle.MutableLiveData;
+import android.app.Application;
+import android.os.AsyncTask;
+
+import androidx.lifecycle.LiveData;
 
 import com.example.mybrary.data.firebase.FolderDAO;
-import com.example.mybrary.data.local.FolderLocalDAO;
+import com.example.mybrary.data.local.AppDatabase;
+import com.example.mybrary.data.local.dataMapper.FolderDataMapper;
+import com.example.mybrary.data.local.entity.FolderEntity;
+import com.example.mybrary.data.local.dao.FolderLocalDAO;
 import com.example.mybrary.domain.model.Folder;
-import com.google.common.util.concurrent.FutureCallback;
-import com.google.common.util.concurrent.Futures;
-import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 public class FolderRepository {
 
-    FolderDAO remoteDao;
-    FolderLocalDAO localDao;
+    private FolderDAO remoteDao;
+    private FolderLocalDAO localDao;
+    private FolderDataMapper folderMapper;
+    private LiveData<List<Folder>> readFolders;
 
-    public FolderRepository() {
-        remoteDao = new FolderDAO();
+    public FolderRepository(Application application) {
+        AppDatabase db;
+        db = AppDatabase.getDbInstance(application);
+        localDao = db.folderDao();
+        folderMapper = new FolderDataMapper();
+        readFolders = folderMapper.fromLiveEntityList(localDao.getAll());
     }
+
+
+    // Dummy boolean
+    private final boolean isLocal = true;
 
     // Get All folders
-    public List<Folder> getAllFolders() {
-
-        return remoteDao.getAllFolders();
+    public LiveData<List<Folder>> getAllFolders() {
+        if (isLocal) {
+            return readFolders;
+        } else {
+            return null;
+        }
     }
 
-    // Get Folder by ID
-    public Folder getFolderById() {
-        return remoteDao.getFolderById();
-    }
+//    // Get Folder by ID
+//    public Folder getFolderById() {
+//        if (isLocal) {
+//            return null;
+//        } else {
+//            return remoteDao.getFolderById();
+//        }
+//    }
 
     // Add folder
     public void add(Folder folder) {
-        remoteDao.add(folder);
+        if (isLocal) {
+            InsertAsyncTask task = new InsertAsyncTask(localDao);
+            task.execute(folder);
+        } else {
+            remoteDao.add(folder);
+        }
     }
 
     // Update folder
     public void update(String key, HashMap<String, Object> hashMap) {
-        remoteDao.update(key, hashMap);
+        if (isLocal) {
+            localDao.update();
+        } else {
+            remoteDao.update(key, hashMap);
+        }
+
 
     }
 
@@ -48,5 +77,45 @@ public class FolderRepository {
     public void delete(String key) {
         remoteDao.delete(key);
     }
+
+    private static class InsertAsyncTask extends AsyncTask<Folder, Void, Void> {
+
+        private FolderLocalDAO asyncTaskDao;
+        private final FolderDataMapper folderMapper = new FolderDataMapper();
+
+        InsertAsyncTask(FolderLocalDAO dao) {
+            asyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Folder... folder) {
+            System.out.println(folder[0]);
+            FolderEntity folderEntity = folderMapper.mapToEntity(folder[0]);
+            asyncTaskDao.add(folderEntity);
+            return null;
+        }
+    }
+
+
+//    private static class QueryAsyncTask extends
+//            AsyncTask<String, Void, List<Folder>> {
+//
+//        private FolderLocalDAO asyncTaskDao;
+//        private FolderRepository delegate = null;
+//
+//        QueryAsyncTask(FolderLocalDAO dao) {
+//            asyncTaskDao = dao;
+//        }
+//
+//        @Override
+//        protected List<Folder> doInBackground(String... strings) {
+//            return asyncTaskDao.getAll();
+//        }
+//
+//        @Override
+//        protected void onPostExecute(List<Folder> result) {
+//            delegate.asyncFinished(result);
+//        }
+//    }
 
 }

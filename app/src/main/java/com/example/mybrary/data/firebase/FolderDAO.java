@@ -31,32 +31,6 @@ public class FolderDAO{
 
     ExecutorService execService = Executors.newSingleThreadExecutor();
     ListeningExecutorService lExecService = MoreExecutors.listeningDecorator(execService);
-    // Async
-    ListenableFuture<List<Folder>> asyncTask = lExecService.submit(
-            new Callable<List<Folder>>() {
-                @Override
-                public List<Folder> call() throws Exception {
-                    List<Folder> folders = new ArrayList<>();
-                    dbReference.orderByKey().addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            for (DataSnapshot data : snapshot.getChildren()) {
-
-                                Map<String,Object> td = (HashMap<String, Object>)data.getValue();
-                                Folder folder = new Folder(td.get("name").toString());
-                                folders.add(folder);
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-                    return folders;
-                }
-            }
-    );
 
     public FolderDAO() {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
@@ -65,6 +39,33 @@ public class FolderDAO{
 
     // Get all folders
     public List<Folder> getAllFolders() {
+
+        ListenableFuture<List<Folder>> asyncTask = lExecService.submit(
+                new Callable<List<Folder>>() {
+                    @Override
+                    public List<Folder> call() throws Exception {
+                        List<Folder> folders = new ArrayList<>();
+                        dbReference.orderByKey().addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for (DataSnapshot data : snapshot.getChildren()) {
+
+                                    Map<String,Object> td = (HashMap<String, Object>)data.getValue();
+                                    Folder folder = new Folder((Long) td.get("id"), td.get("name").toString());
+                                    folders.add(folder);
+                                }
+                                System.out.println(folders);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                        return folders;
+                    }
+                }
+        );
         List<Folder> folders = new ArrayList<>();
 
         Futures.addCallback(

@@ -2,9 +2,11 @@ package com.example.mybrary.domain.model;
 
 public class Folder {
 
+    private long id;
     private String name;
 
-    public Folder(String name) {
+    public Folder(long id, String name) {
+        this.id = id;
         this.name = name;
     }
 
@@ -16,10 +18,19 @@ public class Folder {
         this.name = name;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "Folder{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 '}';
     }
 }

@@ -1,34 +1,38 @@
 package com.example.mybrary.ui.viewmodel;
 
+import android.app.Application;
+
+import androidx.lifecycle.AndroidViewModel;
+
 import com.example.mybrary.data.repository.FolderRepository;
 import com.example.mybrary.domain.model.Folder;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class NewFolderViewModel {
+public class NewFolderViewModel extends AndroidViewModel {
 
     private FolderRepository folderRepo;
     private String folderName;
-    private List<Folder> folders = new ArrayList<>();
+//    private LiveData<List<Folder>> folders;
 
-    public NewFolderViewModel() {
-        folderRepo = new FolderRepository();
-        folders = folderRepo.getAllFolders();
+    public NewFolderViewModel(Application application) {
+        super(application);
+        folderRepo = new FolderRepository(application);
     }
 
     public String checkFolderInput(String folderInput) {
-        if (folderInput.equals("")) {
-            return "null";
-        }
 
-        boolean folderExists = folders.stream().anyMatch(o -> o.getName().equals(folderInput));
-        if (folderExists) {
-            return "exists";
-        } else {
-            Folder newFolder = new Folder(folderInput);
-            folderRepo.add(newFolder);
-            return "saved";
-        }
+        Folder newFolder = new Folder(0, folderInput);
+        folderRepo.add(newFolder);
+        return "saved";
+
+//        if (folderInput.equals("")) {
+//            return "null";
+//        }
+//
+//        boolean folderExists = folders.stream().anyMatch(o -> o.getName().equals(folderInput));
+//        if (folderExists) {
+//            return "exists";
+//        } else {
+//
+//        }
     }
 }

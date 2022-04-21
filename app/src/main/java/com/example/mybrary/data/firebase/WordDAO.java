@@ -32,12 +32,16 @@ public class WordDAO {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot data : snapshot.getChildren()) {
                     Map<String,Object> td=(HashMap<String, Object>)data.getValue();
-                    long status = Long.parseLong(td.get("status_level").toString());
+                    long id = Long.parseLong(td.get("id").toString());
+                    long folder_id = Long.parseLong(td.get("folder_id").toString());
+                    boolean review = (boolean) td.get("review");
                     System.out.println(td.get("status_level"));
-                    Word word = new Word(td.get("word").toString(),
+                    Word word = new Word(id,
+                            folder_id,
+                            td.get("word").toString(),
                             td.get("translation").toString(),
                             td.get("notes").toString(),
-                            data.getKey());
+                            review);
                     words.add(word);
                 }
             }

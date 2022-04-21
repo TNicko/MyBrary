@@ -2,6 +2,7 @@ package com.example.mybrary.ui.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -49,12 +50,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mainViewModel = new MainViewModel();
+        // Get MainViewModel
+        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
         // Display Recycle View of all folders
         folderRecView = findViewById(R.id.folderRecView);
         folderAdapter = new FolderRecViewAdapter(this);
-        folderAdapter.setFolders(mainViewModel.folders);
+        mainViewModel.folders.observe(this, folders -> {
+            folderAdapter.setFolders(folders);
+        });
 
         folderRecView.setAdapter(folderAdapter);
         folderRecView.setLayoutManager(new LinearLayoutManager(this));
@@ -71,9 +75,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Switch Activity -> FolderActivity
-    public void folderActivity(String folderName) {
+    public void folderActivity(long folderId) {
         Intent intent = new Intent(MainActivity.this, FolderActivity.class);
-        intent.putExtra("FOLDER_NAME", folderName);
+        intent.putExtra("FOLDER_ID", folderId);
         this.startActivity(intent);
     }
 
