@@ -18,6 +18,7 @@ import com.example.mybrary.network.ConnectionModel;
 import com.example.mybrary.ui.adapter.FolderRecViewAdapter;
 import com.example.mybrary.ui.adapter.WordRecViewAdapter;
 import com.example.mybrary.ui.viewmodel.FolderViewModel;
+import com.example.mybrary.ui.viewmodel.FolderViewModelFactory;
 import com.example.mybrary.ui.viewmodel.MainViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -53,13 +54,14 @@ public class FolderActivity extends AppCompatActivity {
             }
         });
 
-        // Get FolderViewModel
-        folderViewModel = new ViewModelProvider(this).get(FolderViewModel.class);
-
-        // Get data from MainActivity
+        // Get data from Previous Activity
         Intent intent = getIntent();
         long folderId = intent.getLongExtra("FOLDER_ID", 0);
         System.out.println("FOLDER ID = "+folderId);
+
+        // Get FolderViewModel
+//        folderViewModel = new ViewModelProvider(this).get(FolderViewModel.class);
+        folderViewModel = new ViewModelProvider(this, new FolderViewModelFactory(this.getApplication(), folderId)).get(FolderViewModel.class);
 
         // Display Recycle View of all words
         wordRecView = findViewById(R.id.wordRecView);
@@ -89,3 +91,4 @@ public class FolderActivity extends AppCompatActivity {
         this.startActivity(intent);
     }
 }
+

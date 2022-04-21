@@ -22,6 +22,7 @@ public class NewWordActivity extends AppCompatActivity {
 
     private NewWordViewModel newWordViewModel;
     private Button saveBtn, cancelBtn;
+    private Long folderId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,7 @@ public class NewWordActivity extends AppCompatActivity {
 
         // Get data from FolderActivity
         Intent intent = getIntent();
-        long folderId = intent.getLongExtra("FOLDER_ID", 0);
+        folderId = intent.getLongExtra("FOLDER_ID", 0);
         System.out.println("FOLDER ID = "+folderId);
 
         saveBtn = findViewById(R.id.saveBtn);
@@ -96,6 +97,7 @@ public class NewWordActivity extends AppCompatActivity {
     // Switch Activity -> FolderActivity
     public void newWordActivity() {
         Intent intent = new Intent(NewWordActivity.this, FolderActivity.class);
+        intent.putExtra("FOLDER_ID", folderId);
         this.startActivity(intent);
     }
 }

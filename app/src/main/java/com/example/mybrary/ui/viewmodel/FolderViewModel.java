@@ -15,10 +15,10 @@ public class FolderViewModel extends AndroidViewModel {
     private WordRepository wordRepo;
     public LiveData<List<Word>> words;
 
-    public FolderViewModel(Application application) {
+    public FolderViewModel(Application application, Long folderId) {
         super(application);
-        wordRepo = new WordRepository(application);
-        words = wordRepo.getAllWords();
+        wordRepo = new WordRepository(application, folderId);
+        words = wordRepo.getAllWords(folderId);
     }
 
     LiveData<List<Word>> getAllWords() {

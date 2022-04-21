@@ -23,18 +23,24 @@ public class WordRepository {
     private WordDataMapper wordMapper;
     private LiveData<List<Word>> readWords;
 
-    public WordRepository(Application application) {
+    public WordRepository(Application application, Long folderId) {
         AppDatabase db;
         db = AppDatabase.getDbInstance(application);
         localDao = db.wordDao();
         wordMapper = new WordDataMapper();
-        readWords = wordMapper.fromLiveEntityList(localDao.getAll());
+        readWords = wordMapper.fromLiveEntityList(localDao.getAll(folderId));
+    }
+
+    public WordRepository(Application application) {
+        AppDatabase db;
+        db = AppDatabase.getDbInstance(application);
+        localDao = db.wordDao();
     }
 
     private final boolean isLocal = true;
 
     // Get all words
-    public LiveData<List<Word>> getAllWords() {
+    public LiveData<List<Word>> getAllWords(Long folderId) {
         if (isLocal) {
             return readWords;
         } else {

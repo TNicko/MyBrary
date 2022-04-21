@@ -15,8 +15,8 @@ import java.util.List;
 @Dao
 public interface WordLocalDAO {
 
-    @Query("SELECT * FROM words")
-    public LiveData<List<WordEntity>> getAll();
+    @Query("SELECT * FROM words WHERE folder_id=:folderId")
+    public LiveData<List<WordEntity>> getAll(Long folderId);
 
     @Insert()
     void add(WordEntity... word);
