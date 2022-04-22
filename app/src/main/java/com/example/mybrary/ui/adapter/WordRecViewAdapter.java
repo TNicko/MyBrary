@@ -53,16 +53,18 @@ public class WordRecViewAdapter extends RecyclerView.Adapter<WordRecViewAdapter.
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                long folderId = words.get(position).getFolder_id();
                 long wordId = (long) holder.parent.getTag();
-                updateWordActivity(wordId);
+                updateWordActivity(wordId, folderId);
             }
         });
     }
 
     // Switch Activity -> updateWordActivity
-    public void updateWordActivity(long wordId) {
+    public void updateWordActivity(long wordId, long folderId) {
         Intent intent = new Intent(context, UpdateWordActivity.class);
         intent.putExtra("WORD_ID", wordId);
+        intent.putExtra("FOLDER_ID", folderId);
         context.startActivity(intent);
     }
 

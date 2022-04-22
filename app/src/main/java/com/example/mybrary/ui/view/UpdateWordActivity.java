@@ -1,11 +1,13 @@
 package com.example.mybrary.ui.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -27,6 +29,7 @@ public class UpdateWordActivity extends AppCompatActivity {
     private EditText wordInput, translationInput, notesInput;
     private Button saveBtn, cancelBtn, deleteBtn;
     private SwitchMaterial switchInput;
+    private Word word;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,7 @@ public class UpdateWordActivity extends AppCompatActivity {
         // Get Data from Previous Activity
         Intent intent = getIntent();
         long wordId = intent.getLongExtra("WORD_ID", 0);
+        folderId = intent.getLongExtra("FOLDER_ID", 0);
         System.out.println("WORD ID = "+wordId);
 
         // Get UpdateWordViewModel
@@ -69,6 +73,32 @@ public class UpdateWordActivity extends AppCompatActivity {
         switchInput = findViewById(R.id.wpSwitch);
         setWordInfo();
 
+        saveBtn = findViewById(R.id.saveBtn);
+        cancelBtn = findViewById(R.id.cancelBtn);
+        deleteBtn = findViewById(R.id.deleteBtn);
+
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String wordName, translation, notes;
+                Boolean review;
+                wordName = wordInput.getText().toString();
+                translation = translationInput.getText().toString();
+                notes = notesInput.getText().toString();
+                review = switchInput.isChecked();
+                Word updatedWord = new Word(word.getId(), word.getFolder_id(), wordName, translation, notes, review);
+                updateWordViewModel.updateWord(updatedWord);
+                folderActivity();
+            }
+        });
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                folderActivity();
+            }
+        });
+
     }
 
     private void setWordInfo() {
@@ -76,11 +106,19 @@ public class UpdateWordActivity extends AppCompatActivity {
         updateWordViewModel.returnWord().observe(this, new Observer<List<Word>>() {
             @Override
             public void onChanged(List<Word> words) {
+                word = words.get(0);
                 wordInput.setText(words.get(0).getWord());
                 translationInput.setText(words.get(0).getTranslation());
                 notesInput.setText(words.get(0).getNotes());
                 switchInput.setChecked(words.get(0).isReview());
             }
         });
+    }
+
+    // Switch Activity -> FolderActivity
+    public void folderActivity() {
+        Intent intent = new Intent(UpdateWordActivity.this, FolderActivity.class);
+        intent.putExtra("FOLDER_ID", folderId);
+        this.startActivity(intent);
     }
 }

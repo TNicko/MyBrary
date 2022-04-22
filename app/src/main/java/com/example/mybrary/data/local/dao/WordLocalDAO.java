@@ -23,7 +23,6 @@ public interface WordLocalDAO {
     @Query("SELECT * FROM words WHERE id=:id")
     public List<WordEntity> getById(String id);
 
-
     @Insert()
     void add(WordEntity... word);
 

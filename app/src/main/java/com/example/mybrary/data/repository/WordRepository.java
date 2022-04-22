@@ -80,7 +80,8 @@ public class WordRepository {
     // Update word
     public void update(Word word) {
         if (isLocal) {
-            localDao.update(wordMapper.mapToEntity(word));
+            WordRepository.UpdateAsyncTask task = new WordRepository.UpdateAsyncTask(localDao);
+            task.execute(word);
         } else {
 //            remoteDao.update(word);
         }
@@ -130,6 +131,24 @@ public class WordRepository {
             System.out.println(words[0]);
             WordEntity wordEntity = wordMapper.mapToEntity(words[0]);
             asyncTaskDao.add(wordEntity);
+            return null;
+        }
+    }
+
+    private static class UpdateAsyncTask extends AsyncTask<Word, Void, Void> {
+
+        private WordLocalDAO asyncTaskDao;
+        private final WordDataMapper wordMapper = new WordDataMapper();
+
+        UpdateAsyncTask(WordLocalDAO dao) {
+            asyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Word... words) {
+            System.out.println(words[0]);
+            WordEntity wordEntity = wordMapper.mapToEntity(words[0]);
+            asyncTaskDao.update(wordEntity);
             return null;
         }
     }
