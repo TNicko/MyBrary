@@ -4,6 +4,7 @@ import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.loader.content.AsyncTaskLoader;
 
 import com.example.mybrary.data.firebase.WordDAO;
@@ -22,6 +23,7 @@ public class WordRepository {
     private WordLocalDAO localDao;
     private WordDataMapper wordMapper;
     private LiveData<List<Word>> readWords;
+    private MutableLiveData<List<Word>> word = new MutableLiveData<>();
 
     public WordRepository(Application application, Long folderId) {
         AppDatabase db;
@@ -48,10 +50,22 @@ public class WordRepository {
         }
     }
 
-    //Get word by id
-//    public Word getWordById() {
-//        return remoteDao.getWordById();
-//    }
+    // Get word by id
+    public void getWordById(Long id) {
+        if (isLocal) {
+            String wordId = id.toString();
+            QueryAsyncTask task = new QueryAsyncTask(localDao);
+            task.delegate = this;
+            task.execute(wordId);
+        } else {
+
+        }
+    }
+
+    // Return word
+    public MutableLiveData<List<Word>> returnWord() {
+        return word;
+    }
 
     // Add word
     public void add(Word word) {
@@ -64,17 +78,42 @@ public class WordRepository {
     }
 
     // Update word
-    public void update(String key, HashMap<String, Object> hashMap) {
+    public void update(Word word) {
         if (isLocal) {
-            localDao.update();
+            localDao.update(wordMapper.mapToEntity(word));
         } else {
-            remoteDao.update(key, hashMap);
+//            remoteDao.update(word);
         }
     }
 
     // Delete word
     public void delete(String key) {
         remoteDao.delete(key);
+    }
+
+    private void asyncFinished(List<Word> results) {
+        word.setValue(results);
+    }
+
+    private static class QueryAsyncTask extends AsyncTask<String, Void, List<Word>> {
+
+        private WordLocalDAO asyncTaskDao;
+        private WordRepository delegate = null;
+        private WordDataMapper wordMapper = new WordDataMapper();
+
+        QueryAsyncTask(WordLocalDAO dao) {
+            asyncTaskDao = dao;
+        }
+
+        @Override
+        protected List<Word> doInBackground(String... params) {
+            return wordMapper.fromEntityList(asyncTaskDao.getById(params[0]));
+        }
+
+        @Override
+        protected void onPostExecute(List<Word> result) {
+            delegate.asyncFinished(result);
+        }
     }
 
     private static class InsertAsyncTask extends AsyncTask<Word, Void, Void> {

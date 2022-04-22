@@ -1,10 +1,12 @@
-package com.example.mybrary.ui.viewmodel;
+package com.example.mybrary.ui.factory;
 
 import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.example.mybrary.ui.viewmodel.FolderViewModel;
 
 public class FolderViewModelFactory implements ViewModelProvider.Factory{
 

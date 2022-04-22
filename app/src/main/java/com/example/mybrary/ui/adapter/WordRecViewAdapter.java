@@ -54,7 +54,7 @@ public class WordRecViewAdapter extends RecyclerView.Adapter<WordRecViewAdapter.
             @Override
             public void onClick(View view) {
                 long wordId = (long) holder.parent.getTag();
-
+                updateWordActivity(wordId);
             }
         });
     }

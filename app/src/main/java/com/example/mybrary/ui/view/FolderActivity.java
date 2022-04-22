@@ -10,17 +10,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mybrary.R;
 import com.example.mybrary.network.ConnectionLiveData;
 import com.example.mybrary.network.ConnectionModel;
-import com.example.mybrary.ui.adapter.FolderRecViewAdapter;
 import com.example.mybrary.ui.adapter.WordRecViewAdapter;
 import com.example.mybrary.ui.viewmodel.FolderViewModel;
-import com.example.mybrary.ui.viewmodel.FolderViewModelFactory;
-import com.example.mybrary.ui.viewmodel.MainViewModel;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.mybrary.ui.factory.FolderViewModelFactory;
 
 public class FolderActivity extends AppCompatActivity {
 
@@ -28,6 +26,7 @@ public class FolderActivity extends AppCompatActivity {
     private Button addWordBtn;
     private WordRecViewAdapter wordAdapter;
     private FolderViewModel folderViewModel;
+    private TextView logo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,12 +81,27 @@ public class FolderActivity extends AppCompatActivity {
                 newWordActivity(folderId);
             }
         });
+
+        // Logo Clicked -> MainActivity
+        logo = findViewById(R.id.logo);
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivity();
+            }
+        });
     }
 
     // Switch Activity -> newWordActivity
     public void newWordActivity(long folderId) {
         Intent intent = new Intent(FolderActivity.this, NewWordActivity.class);
         intent.putExtra("FOLDER_ID", folderId);
+        this.startActivity(intent);
+    }
+
+    // Switch Activity -> MainActivity
+    public void mainActivity() {
+        Intent intent = new Intent(FolderActivity.this, MainActivity.class);
         this.startActivity(intent);
     }
 }
