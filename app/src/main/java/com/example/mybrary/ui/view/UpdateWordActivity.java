@@ -92,6 +92,14 @@ public class UpdateWordActivity extends AppCompatActivity {
             }
         });
 
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateWordViewModel.deleteWord();
+                folderActivity();
+            }
+        });
+
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

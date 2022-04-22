@@ -28,6 +28,10 @@ public class UpdateWordViewModel extends AndroidViewModel {
         return word;
     }
 
+    public void deleteWord() {
+        wordRepo.delete(word.getValue().get(0));
+    }
+
     public void updateWord(Word word) {
         wordRepo.update(word);
     }
