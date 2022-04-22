@@ -6,6 +6,7 @@ import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -39,21 +40,21 @@ public class WordRecViewAdapter extends RecyclerView.Adapter<WordRecViewAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        long folderId = words.get(position).getFolder_id();
         // Set info for recycle view
         holder.parent.setTag(words.get(position).getId());
         holder.txtName.setText(words.get(position).getWord());
         holder.txtTranslation.setText(words.get(position).getTranslation());
 
         if (words.get(position).isReview()) {
-            holder.txtStatus.setText("review true");
+            holder.statusBar.setVisibility(View.VISIBLE);
         } else {
-            holder.txtStatus.setText("review false");
+            holder.statusBar.setVisibility(View.INVISIBLE);
         }
 
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                long folderId = words.get(position).getFolder_id();
                 long wordId = (long) holder.parent.getTag();
                 updateWordActivity(wordId, folderId);
             }
@@ -80,13 +81,14 @@ public class WordRecViewAdapter extends RecyclerView.Adapter<WordRecViewAdapter.
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private final ConstraintLayout parent;
-        private final TextView txtName, txtTranslation, txtStatus;
+        private final TextView txtName, txtTranslation;
+        ProgressBar statusBar;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             parent = itemView.findViewById(R.id.parent);
             txtName = itemView.findViewById(R.id.txtName);
             txtTranslation = itemView.findViewById(R.id.txtTranslation);
-            txtStatus = itemView.findViewById(R.id.txtStatus);
+            statusBar = itemView.findViewById(R.id.statusBar);
         }
     }
 }
