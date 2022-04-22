@@ -6,19 +6,25 @@ import android.os.strictmode.InstanceCountViolation;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.mybrary.data.local.dao.FolderLocalDAO;
+import com.example.mybrary.data.local.dao.ReviewLocalDAO;
 import com.example.mybrary.data.local.dao.WordLocalDAO;
 import com.example.mybrary.data.local.entity.FolderEntity;
+import com.example.mybrary.data.local.entity.ReviewEntity;
 import com.example.mybrary.data.local.entity.WordEntity;
+import com.example.mybrary.domain.model.Review;
 
-@Database(entities = {FolderEntity.class, WordEntity.class}, version = 1)
+@Database(entities = {FolderEntity.class, WordEntity.class, ReviewEntity.class}, version = 1)
+@TypeConverters({DateTypeConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract FolderLocalDAO folderDao();
     public abstract WordLocalDAO wordDao();
+    public abstract ReviewLocalDAO reviewDao();
 
     private static AppDatabase INSTANCE;
 

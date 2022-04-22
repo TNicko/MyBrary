@@ -34,7 +34,7 @@ public class FolderRepository {
     // Dummy boolean
     private final boolean isLocal = true;
 
-    // Get All folders
+    // Return All folders
     public LiveData<List<Folder>> getAllFolders() {
         if (isLocal) {
             return readFolders;

@@ -148,7 +148,6 @@ public class WordRepository {
         private WordLocalDAO asyncTaskDao;
         private final WordDataMapper wordMapper = new WordDataMapper();
 
-
         DeleteAsyncTask(WordLocalDAO dao) {
             asyncTaskDao = dao;
         }

@@ -3,6 +3,10 @@ package com.example.mybrary.data.local.entity;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverter;
+import androidx.room.TypeConverters;
+
+import com.example.mybrary.data.local.DateTypeConverter;
 
 import java.util.Date;
 
@@ -23,6 +27,7 @@ public class ReviewEntity {
     @ColumnInfo(name = "level")
     public long level;
 
+    @TypeConverters(DateTypeConverter.class)
     @ColumnInfo(name = "date_created")
     public Date date_created;
 
