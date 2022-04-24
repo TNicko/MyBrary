@@ -7,16 +7,22 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.icu.text.CaseMap;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.mybrary.R;
+import com.example.mybrary.domain.model.Folder;
+import com.example.mybrary.domain.model.Word;
 import com.example.mybrary.network.ConnectionLiveData;
 import com.example.mybrary.network.ConnectionModel;
 import com.example.mybrary.ui.adapter.FolderRecViewAdapter;
 import com.example.mybrary.ui.viewmodel.MainViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,9 +62,13 @@ public class MainActivity extends AppCompatActivity {
         // Display Recycle View of all folders
         folderRecView = findViewById(R.id.folderRecView);
         folderAdapter = new FolderRecViewAdapter(this);
-        mainViewModel.folders.observe(this, folders -> {
-            folderAdapter.setFolders(folders);
+        mainViewModel.allFolderInfo.observe(this, new Observer<Pair<List<Folder>, List<Word>>>() {
+            @Override
+            public void onChanged(Pair<List<Folder>, List<Word>> listListPair) {
+                folderAdapter.setData(listListPair.first, listListPair.second);
+            }
         });
+
 
         folderRecView.setAdapter(folderAdapter);
         folderRecView.setLayoutManager(new LinearLayoutManager(this));

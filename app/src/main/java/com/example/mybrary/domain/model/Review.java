@@ -4,29 +4,29 @@ import java.util.Date;
 
 public class Review {
 
-    Long wordId;
-    Long level;
+    long wordId;
+    long level;
     Date dateCreated;
 
-    public Review(Long wordId, Long level, Date dateCreated) {
+    public Review(long wordId, long level, Date dateCreated) {
         this.wordId = wordId;
         this.level = level;
         this.dateCreated = dateCreated;
     }
 
-    public Long getWordId() {
+    public long getWordId() {
         return wordId;
     }
 
-    public void setWordId(Long wordId) {
+    public void setWordId(long wordId) {
         this.wordId = wordId;
     }
 
-    public Long getLevel() {
+    public long getLevel() {
         return level;
     }
 
-    public void setLevel(Long level) {
+    public void setLevel(long level) {
         this.level = level;
     }
 

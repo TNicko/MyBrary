@@ -1,6 +1,7 @@
 package com.example.mybrary.ui.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -23,6 +24,7 @@ public class NewWordActivity extends AppCompatActivity {
     private NewWordViewModel newWordViewModel;
     private Button saveBtn, cancelBtn;
     private Long folderId;
+    Boolean isReview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,14 @@ public class NewWordActivity extends AppCompatActivity {
         saveBtn = findViewById(R.id.saveBtn);
         cancelBtn = findViewById(R.id.cancelBtn);
 
+        newWordViewModel.returnWordId().observe(this, new Observer<Long>() {
+            @Override
+            public void onChanged(Long aLong) {
+                System.out.println("word Id being saved in review = "+aLong);
+                newWordViewModel.checkReview(isReview, aLong);
+            }
+        });
+
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,13 +85,17 @@ public class NewWordActivity extends AppCompatActivity {
                 translation = translationInput.getText().toString();
                 notes = notesInput.getText().toString();
                 review = reviewInput.isChecked();
+                isReview = review;
 
+                // Check/Add new Word
                 String checkOutput = newWordViewModel.checkWordInput(word, translation, notes, review, folderId);
                 if (checkOutput.equals("saved")){
+                    // Check/Add new Review
                     newWordActivity();
                 } else {
                     Toast.makeText(NewWordActivity.this, "Error", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 

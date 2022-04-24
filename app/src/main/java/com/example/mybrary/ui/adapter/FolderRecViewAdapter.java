@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mybrary.R;
 import com.example.mybrary.domain.model.Folder;
+import com.example.mybrary.domain.model.Word;
 import com.example.mybrary.ui.view.FolderActivity;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ import java.util.List;
 public class FolderRecViewAdapter extends RecyclerView.Adapter<FolderRecViewAdapter.ViewHolder> {
 
     private List<Folder> folders = new ArrayList<>();
-    private ArrayList<String> wordCount = new ArrayList<>();
+    private List<Word> words = new ArrayList<>();
 //    private ArrayList<String> reviewCount = new ArrayList<>();
     private final Context context;
     private long word_num;
@@ -43,7 +44,16 @@ public class FolderRecViewAdapter extends RecyclerView.Adapter<FolderRecViewAdap
         // Set info for recycle view
         holder.txtName.setText(folders.get(position).getName());
         holder.parent.setTag(folders.get(position).getId());
-//        holder.txtWordNum.setText(wordCount.get(position));
+        int wordCount = 0;
+        // Number of words in current folder
+        for(Word word : words) {
+            if(word.getFolder_id() == folders.get(position).getId()) {
+                wordCount += 1;
+            }
+        }
+        String wordNum = String.valueOf(wordCount);
+        holder.txtWordNum.setText(wordNum);
+
         // !!! GetReviewCount() for each folder !!!
 
         holder.parent.setOnClickListener(new View.OnClickListener() {
@@ -67,18 +77,11 @@ public class FolderRecViewAdapter extends RecyclerView.Adapter<FolderRecViewAdap
         return folders.size();
     }
 
-    public void setFolders(List<Folder> folders) {
+    public void setData(List<Folder> folders, List<Word> words) {
         this.folders = folders;
+        this.words = words;
         notifyDataSetChanged();
     }
-
-    public void setWordCount(ArrayList<String> wordCount) {
-        this.wordCount = wordCount;
-    }
-
-//    public void setReviewCount(String reviewCount) {
-//        this.reviewCount = reviewCount;
-//    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private final TextView txtName, txtWordNum, txtReviewNum;

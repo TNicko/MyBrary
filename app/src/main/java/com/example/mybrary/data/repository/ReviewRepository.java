@@ -2,24 +2,15 @@ package com.example.mybrary.data.repository;
 
 import android.app.Application;
 import android.os.AsyncTask;
-import android.provider.ContactsContract;
 
 import androidx.lifecycle.LiveData;
-import androidx.room.Delete;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.mybrary.data.local.AppDatabase;
-import com.example.mybrary.data.local.dao.FolderLocalDAO;
 import com.example.mybrary.data.local.dao.ReviewLocalDAO;
-import com.example.mybrary.data.local.dao.WordLocalDAO;
-import com.example.mybrary.data.local.dataMapper.FolderDataMapper;
 import com.example.mybrary.data.local.dataMapper.ReviewDataMapper;
-import com.example.mybrary.data.local.dataMapper.WordDataMapper;
-import com.example.mybrary.data.local.entity.FolderEntity;
 import com.example.mybrary.data.local.entity.ReviewEntity;
-import com.example.mybrary.data.local.entity.WordEntity;
-import com.example.mybrary.domain.model.Folder;
 import com.example.mybrary.domain.model.Review;
-import com.example.mybrary.domain.model.Word;
 
 import java.util.List;
 
@@ -28,6 +19,7 @@ public class ReviewRepository {
     private ReviewLocalDAO localDao;
     private ReviewDataMapper reviewMapper;
     private LiveData<List<Review>> readAllReviews;
+    private MutableLiveData<List<Review>> review = new MutableLiveData<>();
 
     public ReviewRepository(Application application) {
         AppDatabase db;
@@ -40,6 +32,19 @@ public class ReviewRepository {
     // Return all reviews
     public LiveData<List<Review>> getAllReviews() {
         return readAllReviews;
+    }
+
+    // Get review by id
+    public void getReviewById(Long id) {
+        String wordId = id.toString();
+        QueryAsyncTask task = new QueryAsyncTask(localDao);
+        task.delegate = this;
+        task.execute(wordId);
+    }
+
+    // Return review
+    public MutableLiveData<List<Review>> returnReview() {
+        return review;
     }
 
     // Add review
@@ -58,6 +63,32 @@ public class ReviewRepository {
     public void delete(Review review) {
         DeleteAsyncTask task = new DeleteAsyncTask(localDao);
         task.execute(review);
+    }
+
+    private void asyncQueryFinished(List<Review> results) {
+        review.setValue(results);
+    }
+
+    // Query By ID Data Async
+    private static class QueryAsyncTask extends AsyncTask<String, Void, List<Review>> {
+
+        private ReviewLocalDAO asyncTaskDao;
+        private ReviewRepository delegate = null;
+        private ReviewDataMapper wordMapper = new ReviewDataMapper();
+
+        QueryAsyncTask(ReviewLocalDAO dao) {
+            asyncTaskDao = dao;
+        }
+
+        @Override
+        protected List<Review> doInBackground(String... params) {
+            return wordMapper.fromEntityList(asyncTaskDao.getById(params[0]));
+        }
+
+        @Override
+        protected void onPostExecute(List<Review> result) {
+            delegate.asyncQueryFinished(result);
+        }
     }
 
     // Insert Data Async
@@ -98,6 +129,7 @@ public class ReviewRepository {
         }
     }
 
+    // Delete Data Async
     private static class DeleteAsyncTask extends AsyncTask<Review, Void, Void> {
 
         private ReviewLocalDAO asyncTaskDao;

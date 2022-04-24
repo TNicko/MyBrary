@@ -30,6 +30,7 @@ public class UpdateWordActivity extends AppCompatActivity {
     private Button saveBtn, cancelBtn, deleteBtn;
     private SwitchMaterial switchInput;
     private Word word;
+    Boolean oldReview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,8 +87,14 @@ public class UpdateWordActivity extends AppCompatActivity {
                 translation = translationInput.getText().toString();
                 notes = notesInput.getText().toString();
                 review = switchInput.isChecked();
+
+                // update word
                 Word updatedWord = new Word(word.getId(), word.getFolder_id(), wordName, translation, notes, review);
                 updateWordViewModel.updateWord(updatedWord);
+
+                //check/update review
+                updateWordViewModel.checkReview(updatedWord, oldReview);
+
                 folderActivity();
             }
         });
@@ -96,6 +103,7 @@ public class UpdateWordActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 updateWordViewModel.deleteWord();
+                updateWordViewModel.deleteReview();
                 folderActivity();
             }
         });
@@ -119,6 +127,7 @@ public class UpdateWordActivity extends AppCompatActivity {
                 translationInput.setText(words.get(0).getTranslation());
                 notesInput.setText(words.get(0).getNotes());
                 switchInput.setChecked(words.get(0).isReview());
+                oldReview = words.get(0).isReview();
             }
         });
     }

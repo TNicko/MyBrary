@@ -14,6 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mybrary.R;
+import com.example.mybrary.domain.model.Review;
 import com.example.mybrary.domain.model.Word;
 import com.example.mybrary.ui.view.UpdateWordActivity;
 
@@ -25,6 +26,7 @@ import java.util.List;
 public class WordRecViewAdapter extends RecyclerView.Adapter<WordRecViewAdapter.ViewHolder>{
 
     private List<Word> words = new ArrayList<>();
+    private List<Review> reviews = new ArrayList<>();
     private final Context context;
 
     public WordRecViewAdapter(Context context) {
@@ -76,6 +78,11 @@ public class WordRecViewAdapter extends RecyclerView.Adapter<WordRecViewAdapter.
 
     public void setWords(List<Word> words) {
         this.words = words;
+        notifyDataSetChanged();
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
         notifyDataSetChanged();
     }
 

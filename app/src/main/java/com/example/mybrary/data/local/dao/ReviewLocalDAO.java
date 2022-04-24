@@ -19,10 +19,13 @@ public interface ReviewLocalDAO {
     @Query("SELECT * FROM review")
     public LiveData<List<ReviewEntity>> getAll();
 
+    @Query("SELECT * FROM review WHERE word_id=:id")
+    public List<ReviewEntity> getById(String id);
+
     @Insert()
     void add(ReviewEntity... review);
 
-    @Query("SELECT * FROM review")
+    @Delete
     void delete(ReviewEntity review);
 
     @Update

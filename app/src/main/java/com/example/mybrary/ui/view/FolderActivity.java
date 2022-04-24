@@ -69,6 +69,10 @@ public class FolderActivity extends AppCompatActivity {
             System.out.println(words);
             wordAdapter.setWords(words);
         });
+        folderViewModel.reviews.observe(this, reviews -> {
+            System.out.println(reviews);
+            wordAdapter.setReviews(reviews);
+        });
 
         wordRecView.setAdapter(wordAdapter);
         wordRecView.setLayoutManager(new LinearLayoutManager(this));

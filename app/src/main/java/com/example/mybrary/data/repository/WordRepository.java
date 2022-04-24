@@ -24,26 +24,36 @@ public class WordRepository {
     private WordLocalDAO localDao;
     private WordDataMapper wordMapper;
     private LiveData<List<Word>> readWords;
+    private LiveData<List<Word>> readAllWords;
     private MutableLiveData<List<Word>> word = new MutableLiveData<>();
+    private MutableLiveData<Long> wordId = new MutableLiveData<>();
 
     public WordRepository(Application application, Long folderId) {
         AppDatabase db;
         db = AppDatabase.getDbInstance(application);
         localDao = db.wordDao();
         wordMapper = new WordDataMapper();
-        readWords = wordMapper.fromLiveEntityList(localDao.getAll(folderId));
+        readWords = wordMapper.fromLiveEntityList(localDao.getAllByFolder(folderId));
+        readAllWords = wordMapper.fromLiveEntityList(localDao.getAll());
     }
 
     public WordRepository(Application application) {
         AppDatabase db;
         db = AppDatabase.getDbInstance(application);
         localDao = db.wordDao();
+        wordMapper = new WordDataMapper();
+        readAllWords = wordMapper.fromLiveEntityList(localDao.getAll());
     }
 
     private final boolean isLocal = true;
 
     // Get all words
-    public LiveData<List<Word>> getAllWords(Long folderId) {
+    public LiveData<List<Word>> getAllWords() {
+        return readAllWords;
+    }
+
+    // Get all words in folder
+    public LiveData<List<Word>> getWords(Long folderId) {
         if (isLocal) {
             return readWords;
         } else {
@@ -64,10 +74,18 @@ public class WordRepository {
         return word;
     }
 
+    // Return generated word ID
+    public MutableLiveData<Long> returnWordId() {
+        System.out.println("word id returning... "+wordId);
+        return wordId;
+    }
+
     // Add word
     public void add(Word word) {
         WordRepository.InsertAsyncTask task = new WordRepository.InsertAsyncTask(localDao);
+        task.delegate = this;
         task.execute(word);
+        System.out.println("repo word id: "+ wordId);
     }
 
     // Update word
@@ -82,8 +100,14 @@ public class WordRepository {
         task.execute(word);
     }
 
-    private void asyncFinished(List<Word> results) {
+    private void asyncQueryFinished(List<Word> results) {
         word.setValue(results);
+    }
+
+    // Set generated word ID
+    private void asyncAddFinished(List<Long> id) {
+        System.out.println("setValue id = "+id);
+        wordId.setValue(id.get(0));
     }
 
     private static class QueryAsyncTask extends AsyncTask<String, Void, List<Word>> {
@@ -103,13 +127,14 @@ public class WordRepository {
 
         @Override
         protected void onPostExecute(List<Word> result) {
-            delegate.asyncFinished(result);
+            delegate.asyncQueryFinished(result);
         }
     }
 
-    private static class InsertAsyncTask extends AsyncTask<Word, Void, Void> {
+    private static class InsertAsyncTask extends AsyncTask<Word, Void, List<Long>> {
 
         private WordLocalDAO asyncTaskDao;
+        private WordRepository delegate = null;
         private final WordDataMapper wordMapper = new WordDataMapper();
 
         InsertAsyncTask(WordLocalDAO dao) {
@@ -117,11 +142,16 @@ public class WordRepository {
         }
 
         @Override
-        protected Void doInBackground(Word... words) {
+        protected List<Long> doInBackground(Word... words) {
             System.out.println(words[0]);
             WordEntity wordEntity = wordMapper.mapToEntity(words[0]);
-            asyncTaskDao.add(wordEntity);
-            return null;
+            return asyncTaskDao.add(wordEntity);
+        }
+
+        @Override
+        protected void onPostExecute(List<Long> aLong) {
+            System.out.println("long value on Post = "+aLong);
+            delegate.asyncAddFinished(aLong);
         }
     }
 

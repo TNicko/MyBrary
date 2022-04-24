@@ -17,14 +17,17 @@ import java.util.List;
 @Dao
 public interface WordLocalDAO {
 
+    @Query("SELECT * FROM words")
+    public LiveData<List<WordEntity>> getAll();
+
     @Query("SELECT * FROM words WHERE folder_id=:folderId")
-    public LiveData<List<WordEntity>> getAll(Long folderId);
+    public LiveData<List<WordEntity>> getAllByFolder(Long folderId);
 
     @Query("SELECT * FROM words WHERE id=:id")
     public List<WordEntity> getById(String id);
 
     @Insert()
-    void add(WordEntity... word);
+    List<Long> add(WordEntity... word);
 
     @Delete
     void delete(WordEntity word);

@@ -24,7 +24,7 @@ public class WordDAO {
     }
 
     // Get all words
-    public List<Word> getAllWords() {
+    public List<Word> getWords() {
         ArrayList<Word> words = new ArrayList<>();
 
         dbReference.addValueEventListener(new ValueEventListener() {
