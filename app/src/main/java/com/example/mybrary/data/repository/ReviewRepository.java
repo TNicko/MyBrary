@@ -59,6 +59,11 @@ public class ReviewRepository {
         task.execute(review);
     }
 
+    // Update review timer By ID
+    public void updateTimerById(Boolean timer, long id) {
+        localDao.updateTimer(timer, id);
+    }
+
     // Delete review
     public void delete(Review review) {
         DeleteAsyncTask task = new DeleteAsyncTask(localDao);

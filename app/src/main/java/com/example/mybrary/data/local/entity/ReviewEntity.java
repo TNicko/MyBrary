@@ -14,10 +14,11 @@ import java.util.Date;
 @Entity(tableName = "review")
 public class ReviewEntity {
 
-    public ReviewEntity(long wordId, long level, Date date_created) {
+    public ReviewEntity(long wordId, long level, Date date_created, Boolean timer) {
         this.wordId = wordId;
         this.level = level;
         this.date_created = date_created;
+        this.timer = timer;
     }
 
     @PrimaryKey
@@ -30,5 +31,8 @@ public class ReviewEntity {
     @TypeConverters(DateTypeConverter.class)
     @ColumnInfo(name = "date_created")
     public Date date_created;
+
+    @ColumnInfo(name = "timer")
+    public Boolean timer;
 
 }

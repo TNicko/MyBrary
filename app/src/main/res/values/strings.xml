@@ -20,4 +20,7 @@
     <string name="save_btn">Save</string>
     <string name="delete_btn">Delete</string>
 
+    <!-- Review Notification card -->
+    <string name="review_text">reviews</string>
+
 </resources>

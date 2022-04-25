@@ -1,7 +1,9 @@
 package com.example.mybrary.ui.viewmodel;
 
 import android.app.Application;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LifecycleOwner;
@@ -13,6 +15,7 @@ import com.example.mybrary.data.repository.WordRepository;
 import com.example.mybrary.domain.model.Folder;
 import com.example.mybrary.domain.model.Review;
 import com.example.mybrary.domain.model.Word;
+import com.example.mybrary.domain.util.BroadcastService;
 
 import java.util.Date;
 import java.util.List;
@@ -43,8 +46,9 @@ public class NewWordViewModel extends AndroidViewModel {
             Date currentDate = new Date();
             System.out.println(wordId +" = word id");
 
-            Review newReview = new Review(wordId, 0, currentDate);
+            Review newReview = new Review(wordId, 0, currentDate, true);
             reviewRepo.add(newReview);
+
         }
     }
 

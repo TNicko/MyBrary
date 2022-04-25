@@ -8,17 +8,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mybrary.R;
+import com.example.mybrary.domain.model.Review;
+import com.example.mybrary.domain.model.Word;
 import com.example.mybrary.network.ConnectionLiveData;
 import com.example.mybrary.network.ConnectionModel;
 import com.example.mybrary.ui.adapter.WordRecViewAdapter;
 import com.example.mybrary.ui.viewmodel.FolderViewModel;
 import com.example.mybrary.ui.factory.FolderViewModelFactory;
+
+import java.util.List;
 
 public class FolderActivity extends AppCompatActivity {
 
@@ -65,13 +70,13 @@ public class FolderActivity extends AppCompatActivity {
         // Display Recycle View of all words
         wordRecView = findViewById(R.id.wordRecView);
         wordAdapter = new WordRecViewAdapter(this);
-        folderViewModel.words.observe(this, words -> {
-            System.out.println(words);
-            wordAdapter.setWords(words);
-        });
-        folderViewModel.reviews.observe(this, reviews -> {
-            System.out.println(reviews);
-            wordAdapter.setReviews(reviews);
+        folderViewModel.allWordInfo.observe(this, new Observer<Pair<List<Word>, List<Review>>>() {
+            @Override
+            public void onChanged(Pair<List<Word>, List<Review>> listListPair) {
+                System.out.println(listListPair);
+                wordAdapter.setData(listListPair.first, listListPair.second);
+
+            }
         });
 
         wordRecView.setAdapter(wordAdapter);
@@ -108,5 +113,7 @@ public class FolderActivity extends AppCompatActivity {
         Intent intent = new Intent(FolderActivity.this, MainActivity.class);
         this.startActivity(intent);
     }
+
+
 }
 

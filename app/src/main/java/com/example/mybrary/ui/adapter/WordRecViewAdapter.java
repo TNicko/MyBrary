@@ -22,6 +22,7 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class WordRecViewAdapter extends RecyclerView.Adapter<WordRecViewAdapter.ViewHolder>{
 
@@ -50,8 +51,20 @@ public class WordRecViewAdapter extends RecyclerView.Adapter<WordRecViewAdapter.
 
         if (words.get(position).isReview()) {
             holder.statusBar.setVisibility(View.VISIBLE);
+            holder.statusBarNo.setVisibility(View.VISIBLE);
+            List<Review> review = reviews.stream()
+                    .filter(item -> item.getWordId() == words.get(position).getId())
+                    .collect(Collectors.toList());
+            if (review.size() > 0){
+                long level = review.get(0).getLevel();
+                int levelPercent = (int) (level * 5);
+                holder.statusBar.setProgress(levelPercent);
+                holder.statusBarNo.setText(String.valueOf(level));
+            }
+
         } else {
             holder.statusBar.setVisibility(View.INVISIBLE);
+            holder.statusBarNo.setVisibility(View.INVISIBLE);
         }
 
         holder.parent.setOnClickListener(new View.OnClickListener() {
@@ -76,19 +89,15 @@ public class WordRecViewAdapter extends RecyclerView.Adapter<WordRecViewAdapter.
         return words.size();
     }
 
-    public void setWords(List<Word> words) {
+    public void setData(List<Word> words, List<Review> reviews) {
         this.words = words;
-        notifyDataSetChanged();
-    }
-
-    public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
         notifyDataSetChanged();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private final ConstraintLayout parent;
-        private final TextView txtName, txtTranslation;
+        private final TextView txtName, txtTranslation, statusBarNo;
         ProgressBar statusBar;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -96,6 +105,7 @@ public class WordRecViewAdapter extends RecyclerView.Adapter<WordRecViewAdapter.
             txtName = itemView.findViewById(R.id.txtName);
             txtTranslation = itemView.findViewById(R.id.txtTranslation);
             statusBar = itemView.findViewById(R.id.statusBar);
+            statusBarNo = itemView.findViewById(R.id.statusBarNo);
         }
     }
 }

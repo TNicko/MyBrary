@@ -14,16 +14,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mybrary.R;
 import com.example.mybrary.domain.model.Folder;
+import com.example.mybrary.domain.model.Review;
 import com.example.mybrary.domain.model.Word;
 import com.example.mybrary.ui.view.FolderActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FolderRecViewAdapter extends RecyclerView.Adapter<FolderRecViewAdapter.ViewHolder> {
 
     private List<Folder> folders = new ArrayList<>();
     private List<Word> words = new ArrayList<>();
+    private List<Review> reviews = new ArrayList<>();
 //    private ArrayList<String> reviewCount = new ArrayList<>();
     private final Context context;
     private long word_num;
@@ -44,17 +47,32 @@ public class FolderRecViewAdapter extends RecyclerView.Adapter<FolderRecViewAdap
         // Set info for recycle view
         holder.txtName.setText(folders.get(position).getName());
         holder.parent.setTag(folders.get(position).getId());
-        int wordCount = 0;
-        // Number of words in current folder
-        for(Word word : words) {
-            if(word.getFolder_id() == folders.get(position).getId()) {
-                wordCount += 1;
-            }
-        }
-        String wordNum = String.valueOf(wordCount);
+
+        // Get all words in folder
+        List<Word> folderWords = words.stream()
+                .filter(o -> o.getFolder_id() == (folders.get(position).getId()))
+                .collect(Collectors.toList());
+        System.out.println(folderWords);
+        String wordNum = String.valueOf(folderWords.size());
         holder.txtWordNum.setText(wordNum);
 
-        // !!! GetReviewCount() for each folder !!!
+        // Get all words that have review set to true
+        List<Word> reviewWords = folderWords.stream()
+                .filter(o -> o.isReview()).collect(Collectors.toList());
+        String reviewNum = String.valueOf(reviewWords.size());
+
+        // Get all words which are ready to be reviewed
+        List<Review> reviewReadyWords = new ArrayList<>();
+        for (Word word : reviewWords){
+            Review review = reviews.stream()
+                    .filter(o -> o.getWordId() == word.getId() && !o.getTimer())
+                    .findAny().orElse(null);
+            if (review != null) {
+                reviewReadyWords.add(review);
+            }
+        }
+        String reviewReadyNum = String.valueOf(reviewReadyWords.size());
+        holder.txtReviewNum.setText(reviewReadyNum);
 
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,9 +95,10 @@ public class FolderRecViewAdapter extends RecyclerView.Adapter<FolderRecViewAdap
         return folders.size();
     }
 
-    public void setData(List<Folder> folders, List<Word> words) {
+    public void setData(List<Folder> folders, List<Word> words, List<Review> reviews) {
         this.folders = folders;
         this.words = words;
+        this.reviews = reviews;
         notifyDataSetChanged();
     }
 

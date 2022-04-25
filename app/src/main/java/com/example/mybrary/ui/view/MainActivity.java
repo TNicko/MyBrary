@@ -5,17 +5,30 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.icu.text.CaseMap;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.mybrary.R;
 import com.example.mybrary.domain.model.Folder;
+import com.example.mybrary.domain.model.Review;
 import com.example.mybrary.domain.model.Word;
+import com.example.mybrary.domain.util.BroadcastService;
+import com.example.mybrary.domain.util.UploadWorker;
 import com.example.mybrary.network.ConnectionLiveData;
 import com.example.mybrary.network.ConnectionModel;
 import com.example.mybrary.ui.adapter.FolderRecViewAdapter;
@@ -23,6 +36,9 @@ import com.example.mybrary.ui.viewmodel.MainViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import kotlin.Triple;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -62,10 +78,11 @@ public class MainActivity extends AppCompatActivity {
         // Display Recycle View of all folders
         folderRecView = findViewById(R.id.folderRecView);
         folderAdapter = new FolderRecViewAdapter(this);
-        mainViewModel.allFolderInfo.observe(this, new Observer<Pair<List<Folder>, List<Word>>>() {
+        mainViewModel.allFolderInfo.observe(this, new Observer<Triple<List<Folder>, List<Word>, List<Review>>>() {
             @Override
-            public void onChanged(Pair<List<Folder>, List<Word>> listListPair) {
-                folderAdapter.setData(listListPair.first, listListPair.second);
+            public void onChanged(Triple<List<Folder>, List<Word>, List<Review>> listTriple) {
+                folderAdapter.setData(listTriple.getFirst(), listTriple.getSecond(), listTriple.getThird());
+                System.out.println(listTriple);
             }
         });
 
@@ -96,5 +113,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, NewFolderActivity.class);
         this.startActivity(intent);
     }
+
 }
 

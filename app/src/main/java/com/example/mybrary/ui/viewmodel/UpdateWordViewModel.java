@@ -41,7 +41,10 @@ public class UpdateWordViewModel extends AndroidViewModel {
     }
 
     public void deleteReview() {
-        reviewRepo.delete(review.getValue().get(0));
+        if (review.getValue().size() > 0){
+            reviewRepo.delete(review.getValue().get(0));
+            System.out.println("Review deleted");
+        }
     }
 
     public void updateWord(Word word) {
@@ -75,7 +78,7 @@ public class UpdateWordViewModel extends AndroidViewModel {
         if (word.isReview() && !oldReview) {
             System.out.println("now reviewable");
             Date currentDate = new Date();
-            Review newReview = new Review(word.getId(), 0, currentDate);
+            Review newReview = new Review(word.getId(), 0, currentDate, true);
             reviewRepo.add(newReview);
         }
         // Turned off review (delete review)

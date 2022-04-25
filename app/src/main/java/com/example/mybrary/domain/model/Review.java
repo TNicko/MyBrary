@@ -7,11 +7,13 @@ public class Review {
     long wordId;
     long level;
     Date dateCreated;
+    Boolean timer;
 
-    public Review(long wordId, long level, Date dateCreated) {
+    public Review(long wordId, long level, Date dateCreated, Boolean timer) {
         this.wordId = wordId;
         this.level = level;
         this.dateCreated = dateCreated;
+        this.timer = timer;
     }
 
     public long getWordId() {
@@ -38,12 +40,21 @@ public class Review {
         this.dateCreated = dateCreated;
     }
 
+    public Boolean getTimer() {
+        return timer;
+    }
+
+    public void setTimer(Boolean timer) {
+        this.timer = timer;
+    }
+
     @Override
     public String toString() {
         return "Review{" +
                 "wordId=" + wordId +
                 ", level=" + level +
                 ", dateCreated=" + dateCreated +
+                ", timer=" + timer +
                 '}';
     }
 }

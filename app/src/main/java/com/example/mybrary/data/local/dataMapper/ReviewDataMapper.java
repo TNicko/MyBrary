@@ -15,12 +15,12 @@ public class ReviewDataMapper implements EntityMapper<ReviewEntity, Review> {
 
     @Override
     public Review mapFromEntity(ReviewEntity entity) {
-        return new Review(entity.wordId, entity.level, entity.date_created);
+        return new Review(entity.wordId, entity.level, entity.date_created, entity.timer);
     }
 
     @Override
     public ReviewEntity mapToEntity(Review domainModel) {
-        return new ReviewEntity(domainModel.getWordId(), domainModel.getLevel(), domainModel.getDateCreated());
+        return new ReviewEntity(domainModel.getWordId(), domainModel.getLevel(), domainModel.getDateCreated(), domainModel.getTimer());
     }
 
     public List<Review> fromEntityList(List<ReviewEntity> initial) {

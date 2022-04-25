@@ -12,6 +12,7 @@
         <entry key="app/src/main/res/layout/activity_new_word.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_update_word.xml" value="0.1" />
         <entry key="app/src/main/res/layout/folder_list.xml" value="0.26666666666666666" />
+        <entry key="app/src/main/res/layout/review_notification_card.xml" value="0.2203125" />
         <entry key="app/src/main/res/layout/word_list.xml" value="0.26666666666666666" />
       </map>
     </option>

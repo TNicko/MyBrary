@@ -4,9 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,10 +22,15 @@ import android.widget.Toast;
 
 import com.example.mybrary.R;
 import com.example.mybrary.domain.model.Word;
+import com.example.mybrary.domain.util.BroadcastService;
+import com.example.mybrary.domain.util.UploadWorker;
 import com.example.mybrary.network.ConnectionLiveData;
 import com.example.mybrary.network.ConnectionModel;
 import com.example.mybrary.ui.viewmodel.NewWordViewModel;
 import com.google.android.material.switchmaterial.SwitchMaterial;
+
+import java.io.Serializable;
+import java.util.concurrent.TimeUnit;
 
 public class NewWordActivity extends AppCompatActivity {
 
@@ -67,6 +80,15 @@ public class NewWordActivity extends AppCompatActivity {
             public void onChanged(Long aLong) {
                 System.out.println("word Id being saved in review = "+aLong);
                 newWordViewModel.checkReview(isReview, aLong);
+                if (isReview) {
+                    System.out.println("Work initiating...");
+                    WorkRequest workRequest = new OneTimeWorkRequest.Builder(UploadWorker.class)
+                            .setInitialDelay(30, TimeUnit.SECONDS)
+                            .setInputData(new Data.Builder().putLong("longVal", aLong).build())
+                            .build();
+
+                    WorkManager.getInstance(getApplication()).enqueue(workRequest);
+                }
             }
         });
 
@@ -90,7 +112,6 @@ public class NewWordActivity extends AppCompatActivity {
                 // Check/Add new Word
                 String checkOutput = newWordViewModel.checkWordInput(word, translation, notes, review, folderId);
                 if (checkOutput.equals("saved")){
-                    // Check/Add new Review
                     newWordActivity();
                 } else {
                     Toast.makeText(NewWordActivity.this, "Error", Toast.LENGTH_SHORT).show();

@@ -22,6 +22,9 @@ public interface ReviewLocalDAO {
     @Query("SELECT * FROM review WHERE word_id=:id")
     public List<ReviewEntity> getById(String id);
 
+    @Query("UPDATE review SET timer=:timer WHERE word_id=:id")
+    void updateTimer(Boolean timer, long id);
+
     @Insert()
     void add(ReviewEntity... review);
 
