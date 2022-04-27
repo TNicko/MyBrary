@@ -118,7 +118,9 @@ public class MainActivity extends AppCompatActivity {
                     Word word = listTriple.getSecond().stream()
                             .filter(o -> o.getId() == review.getWordId())
                             .findAny().orElse(null);
-                    reviewReadyWords.add(word);
+                    if (word != null){
+                        reviewReadyWords.add(word);
+                    }
                 }
 
                 if (readyReviews.size() > 0) {

@@ -4,30 +4,68 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.view.ReviewActivity">
+    tools:context=".ui.view.ReviewActivity"
+    android:id="@+id/rootLayout">
 
-    <ProgressBar
-        android:id="@+id/statusBar"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:indeterminateOnly="false"
-        android:progress="20"
-        android:progressDrawable="@drawable/circle"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/progressLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         app:layout_constraintBottom_toTopOf="@+id/card_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/statusBarNo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="2"
-        android:textSize="30dp"
-        app:layout_constraintBottom_toBottomOf="@+id/statusBar"
-        app:layout_constraintEnd_toEndOf="@+id/statusBar"
-        app:layout_constraintStart_toStartOf="@+id/statusBar"
-        app:layout_constraintTop_toTopOf="@+id/statusBar" />
+        <ProgressBar
+            android:id="@+id/statusBar"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:indeterminateOnly="false"
+            android:progress="20"
+            android:progressDrawable="@drawable/circle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/statusBarNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2"
+            android:textSize="30dp"
+            app:layout_constraintBottom_toBottomOf="@+id/statusBar"
+            app:layout_constraintEnd_toEndOf="@+id/statusBar"
+            app:layout_constraintStart_toStartOf="@+id/statusBar"
+            app:layout_constraintTop_toTopOf="@+id/statusBar" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <!--    <ProgressBar-->
+<!--        android:id="@+id/statusBar"-->
+<!--        android:layout_width="120dp"-->
+<!--        android:layout_height="120dp"-->
+<!--        android:indeterminateOnly="false"-->
+<!--        android:progress="20"-->
+<!--        android:progressDrawable="@drawable/circle"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/card_container"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/statusBarNo"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="2"-->
+<!--        android:textSize="30dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/statusBar"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/statusBar"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/statusBar"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/statusBar" />-->
 
         <FrameLayout
             android:id="@+id/card_container"
