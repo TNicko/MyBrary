@@ -61,7 +61,7 @@ public class FolderRecViewAdapter extends RecyclerView.Adapter<FolderRecViewAdap
                 .filter(o -> o.isReview()).collect(Collectors.toList());
         String reviewNum = String.valueOf(reviewWords.size());
 
-        // Get all words which are ready to be reviewed
+        // Get all reviews for words in current folder which are ready to be reviewed
         List<Review> reviewReadyWords = new ArrayList<>();
         for (Word word : reviewWords){
             Review review = reviews.stream()

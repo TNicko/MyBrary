@@ -1,8 +1,9 @@
 package com.example.mybrary.domain.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Review {
+public class Review implements Serializable {
 
     long wordId;
     long level;

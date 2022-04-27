@@ -1,6 +1,8 @@
 package com.example.mybrary.domain.model;
 
-public class Word {
+import java.io.Serializable;
+
+public class Word implements Serializable {
 
     private long id;
     private long folder_id;

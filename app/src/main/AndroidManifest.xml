@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyBrary">
         <activity
+            android:name=".ui.view.ReviewActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.view.UpdateWordActivity"
             android:exported="false" />
         <activity
@@ -35,7 +38,6 @@
         </activity>
 
         <service android:name=".domain.util.BroadcastService" />
-
     </application>
 
 </manifest>

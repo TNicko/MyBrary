@@ -7,7 +7,8 @@
     tools:context=".ui.view.MainActivity">
 
     <include
-        android:id="@+id/include"
+        android:id="@+id/includeCard"
+        android:visibility="gone"
         layout="@layout/review_notification_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,7 +35,7 @@
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include" />
+        app:layout_constraintTop_toBottomOf="@+id/includeCard" />
 
 <!--    </RelativeLayout>-->
 
