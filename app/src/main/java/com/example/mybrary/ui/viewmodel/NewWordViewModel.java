@@ -1,24 +1,22 @@
 package com.example.mybrary.ui.viewmodel;
 
 import android.app.Application;
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.util.Log;
 
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
-import androidx.loader.content.AsyncTaskLoader;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
 
 import com.example.mybrary.data.repository.ReviewRepository;
 import com.example.mybrary.data.repository.WordRepository;
-import com.example.mybrary.domain.model.Folder;
 import com.example.mybrary.domain.model.Review;
 import com.example.mybrary.domain.model.Word;
-import com.example.mybrary.domain.util.BroadcastService;
+import com.example.mybrary.domain.util.UploadWorker;
 
 import java.util.Date;
-import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class NewWordViewModel extends AndroidViewModel {
 
@@ -47,6 +45,7 @@ public class NewWordViewModel extends AndroidViewModel {
             System.out.println(wordId +" = word id");
 
             Review newReview = new Review(wordId, 0, currentDate, true);
+            System.out.println("level: " + newReview.getLevel());
             reviewRepo.add(newReview);
 
         }
@@ -64,5 +63,15 @@ public class NewWordViewModel extends AndroidViewModel {
             System.out.println("word added");
             return "saved";
         }
+    }
+
+    public void setCountdown(long wordId) {
+        System.out.println("Work initiating...");
+        WorkRequest workRequest = new OneTimeWorkRequest.Builder(UploadWorker.class)
+                .setInitialDelay(30, TimeUnit.SECONDS)
+                .setInputData(new Data.Builder().putLong("longVal", wordId).build())
+                .build();
+
+        WorkManager.getInstance(getApplication()).enqueue(workRequest);
     }
 }

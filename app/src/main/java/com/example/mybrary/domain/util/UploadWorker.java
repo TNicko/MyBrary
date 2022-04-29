@@ -25,6 +25,7 @@ public class UploadWorker extends Worker {
 
         long wordId = getInputData().getLong("longVal", 0);
         reviewRepo.updateTimerById(false, wordId);
+        System.out.println("Work Success!");
 
         // Indicate whether success
         return Result.success();

@@ -37,7 +37,11 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".domain.util.BroadcastService" />
+        <provider
+            android:name=".data.MyBraryContentProvider"
+            android:authorities="com.example.mybrary.data"
+            android:exported="true"/>
+
     </application>
 
 </manifest>

@@ -4,14 +4,20 @@ import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
 
 import com.example.mybrary.data.repository.ReviewRepository;
 import com.example.mybrary.data.repository.WordRepository;
 import com.example.mybrary.domain.model.Review;
 import com.example.mybrary.domain.model.Word;
+import com.example.mybrary.domain.util.UploadWorker;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class UpdateWordViewModel extends AndroidViewModel {
 
@@ -59,18 +65,21 @@ public class UpdateWordViewModel extends AndroidViewModel {
         reviewRepo.getReviewById(wordId);
     }
 
-    public String checkWordInput(String word, String translation, String notes, Boolean review, Long folderId) {
+    public String checkWordInput(long wordId, long folderId, String wordName, String translation, String notes, boolean review, boolean oldReview) {
 
-        if (word.equals("")) {
+        if (wordName.equals("")) {
             return "word null";
         } else if (translation.equals("")) {
             return "translation null";
         } else {
-            Word newWord = new Word(0, folderId, word, translation, notes, review);
-            wordRepo.add(newWord);
+            Word word = new Word(wordId, folderId, wordName, translation, notes, review);
+            wordRepo.update(word);
+
+            //check/update review
+            checkReview(word, oldReview);
+
             return "saved";
         }
-
     }
 
     public void checkReview(Word word, Boolean oldReview){
@@ -80,6 +89,13 @@ public class UpdateWordViewModel extends AndroidViewModel {
             Date currentDate = new Date();
             Review newReview = new Review(word.getId(), 0, currentDate, true);
             reviewRepo.add(newReview);
+
+            System.out.println("Work initiating...");
+            WorkRequest workRequest = new OneTimeWorkRequest.Builder(UploadWorker.class)
+                    .setInitialDelay(30, TimeUnit.SECONDS)
+                    .setInputData(new Data.Builder().putLong("longVal", word.getId()).build())
+                    .build();
+            WorkManager.getInstance(getApplication()).enqueue(workRequest);
         }
         // Turned off review (delete review)
         else if (!word.isReview() && oldReview) {

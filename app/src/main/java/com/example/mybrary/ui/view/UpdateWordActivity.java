@@ -89,11 +89,7 @@ public class UpdateWordActivity extends AppCompatActivity {
                 review = switchInput.isChecked();
 
                 // update word
-                Word updatedWord = new Word(word.getId(), word.getFolder_id(), wordName, translation, notes, review);
-                updateWordViewModel.updateWord(updatedWord);
-
-                //check/update review
-                updateWordViewModel.checkReview(updatedWord, oldReview);
+                String checkWordUpdated = updateWordViewModel.checkWordInput(word.getId(), word.getFolder_id(), wordName, translation, notes, review, oldReview);
 
                 folderActivity();
             }
