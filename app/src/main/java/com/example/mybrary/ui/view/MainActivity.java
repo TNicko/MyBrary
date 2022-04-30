@@ -1,5 +1,6 @@
 package com.example.mybrary.ui.view;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.Observer;
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,8 +23,13 @@ import com.example.mybrary.network.ConnectionLiveData;
 import com.example.mybrary.network.ConnectionModel;
 import com.example.mybrary.ui.adapter.FolderRecViewAdapter;
 import com.example.mybrary.ui.viewmodel.MainViewModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -43,10 +50,40 @@ public class MainActivity extends AppCompatActivity {
     private List<Review> readyReviews;
     List<Word> reviewReadyWords = new ArrayList<>();
 
+    // authentication
+    private static final String TAG = "Firebase Login";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        FirebaseAuth fAuth = FirebaseAuth.getInstance();
+        Intent intent = getIntent();
+        String emailLink = intent.getData().toString();
+
+        if (fAuth.isSignInWithEmailLink(emailLink)) {
+            String vEmail = "email";
+            fAuth.signInWithEmailLink(vEmail, emailLink)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Log.d(TAG, "Succesfully signed in with email link!");
+                                AuthResult result = task.getResult();
+                                FirebaseUser user = result.getUser();
+                                Boolean isNew = result.getAdditionalUserInfo().isNewUser();
+                                if (isNew) {
+                                    System.out.println("New User Created: " + user);
+                                } else {
+                                    System.out.println("Not new user: " +  user);
+                                }
+                            } else {
+                                Log.e(TAG, "Error signing in with email link", task.getException());
+                            }
+                        }
+                    });
+        }
 
         // Tracks and displays changes to network connection
         ConnectionLiveData connectionLiveData = new ConnectionLiveData(getApplicationContext());

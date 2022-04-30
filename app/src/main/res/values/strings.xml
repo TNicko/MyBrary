@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">MyBrary</string>
 
+    <!-- Login / Register -->
+    <string name="email">email</string>
+    <string name="loginBtn">Submit</string>
+    <string name="register">Enter your email to begin</string>
+
     <!--  Main Activity -->
     <string name="add_folder_btn">AddFolderBtn</string>
 
@@ -28,6 +33,6 @@
     <integer name="card_flip_time_half">500</integer>
 
     <!-- id -->
-    <item name="nextReviewBtn" type="id"/>
+    <item name="nextReviewBtn" type="id" />
 
 </resources>

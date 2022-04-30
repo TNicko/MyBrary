@@ -1,5 +1,7 @@
 package com.example.mybrary.data.local.dao;
 
+import android.database.Cursor;
+
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -26,5 +28,8 @@ public interface FolderLocalDAO{
 
     @Update
     void update(FolderEntity... folder);
+
+    @Query("SELECT * FROM folders")
+    public Cursor getAllCursor();
 
 }

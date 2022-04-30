@@ -1,5 +1,7 @@
 package com.example.mybrary.data.local.dao;
 
+import android.database.Cursor;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
@@ -34,4 +36,13 @@ public interface WordLocalDAO {
 
     @Update
     void update(WordEntity... word);
+
+    @Query("SELECT * FROM words")
+    public Cursor getAllCursor();
+
+    @Query("SELECT * FROM words WHERE folder_id=:folderId")
+    public Cursor getAllByFolderCursor(Long folderId);
+
+    @Query("SELECT * FROM words WHERE id=:id")
+    public Cursor getByIdCursor(String id);
 }

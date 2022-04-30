@@ -7,9 +7,11 @@
         <entry key="app/src/main/res/drawable/circle.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_folder.xml" value="0.2011444091796875" />
         <entry key="app/src/main/res/layout/activity_folder2.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.26666666666666666" />
         <entry key="app/src/main/res/layout/activity_new_folder.xml" value="0.18958333333333333" />
         <entry key="app/src/main/res/layout/activity_new_word.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_register.xml" value="0.18385416666666668" />
         <entry key="app/src/main/res/layout/activity_review.xml" value="0.21873474121093753" />
         <entry key="app/src/main/res/layout/activity_update_word.xml" value="0.1" />
         <entry key="app/src/main/res/layout/folder_list.xml" value="0.26666666666666666" />
