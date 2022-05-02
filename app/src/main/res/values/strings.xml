@@ -1,10 +1,14 @@
 <resources>
     <string name="app_name">MyBrary</string>
+    <string name="com_auth0_client_id">BLrARwgyQpbyZHqmF1vHvA3CkVKR29hG</string>
+    <string name="com_auth0_domain">dev-k3ad2kav.us.auth0.com</string>
 
     <!-- Login / Register -->
     <string name="email">email</string>
+    <string name="code">code</string>
     <string name="loginBtn">Submit</string>
     <string name="register">Enter your email to begin</string>
+    <string name="enter_code">Enter code sent to email</string>
 
     <!--  Main Activity -->
     <string name="add_folder_btn">AddFolderBtn</string>
