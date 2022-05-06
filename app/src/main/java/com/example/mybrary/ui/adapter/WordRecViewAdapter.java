@@ -43,7 +43,7 @@ public class WordRecViewAdapter extends RecyclerView.Adapter<WordRecViewAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        long folderId = words.get(position).getFolder_id();
+        String folderId = words.get(position).getFolder_id();
         // Set info for recycle view
         holder.parent.setTag(words.get(position).getId());
         holder.txtName.setText(words.get(position).getWord());
@@ -53,7 +53,7 @@ public class WordRecViewAdapter extends RecyclerView.Adapter<WordRecViewAdapter.
             holder.statusBar.setVisibility(View.VISIBLE);
             holder.statusBarNo.setVisibility(View.VISIBLE);
             List<Review> review = reviews.stream()
-                    .filter(item -> item.getWordId() == words.get(position).getId())
+                    .filter(item -> item.getWordId().equals(words.get(position).getId()))
                     .collect(Collectors.toList());
             if (review.size() > 0){
                 long level = review.get(0).getLevel();
@@ -70,14 +70,14 @@ public class WordRecViewAdapter extends RecyclerView.Adapter<WordRecViewAdapter.
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                long wordId = (long) holder.parent.getTag();
+                String wordId = (String) holder.parent.getTag();
                 updateWordActivity(wordId, folderId);
             }
         });
     }
 
     // Switch Activity -> updateWordActivity
-    public void updateWordActivity(long wordId, long folderId) {
+    public void updateWordActivity(String wordId, String folderId) {
         Intent intent = new Intent(context, UpdateWordActivity.class);
         intent.putExtra("WORD_ID", wordId);
         intent.putExtra("FOLDER_ID", folderId);

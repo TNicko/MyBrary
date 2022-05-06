@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -23,9 +24,9 @@ public interface ReviewLocalDAO {
     public List<ReviewEntity> getById(String id);
 
     @Query("UPDATE review SET timer=:timer WHERE word_id=:id")
-    void updateTimer(Boolean timer, long id);
+    void updateTimer(Boolean timer, String id);
 
-    @Insert()
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void add(ReviewEntity... review);
 
     @Delete
@@ -33,4 +34,8 @@ public interface ReviewLocalDAO {
 
     @Update
     void update(ReviewEntity... review);
+
+    // Clear all data
+    @Query("DELETE FROM review")
+    public void nukeTable();
 }

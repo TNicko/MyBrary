@@ -50,7 +50,7 @@ public class FolderRecViewAdapter extends RecyclerView.Adapter<FolderRecViewAdap
 
         // Get all words in folder
         List<Word> folderWords = words.stream()
-                .filter(o -> o.getFolder_id() == (folders.get(position).getId()))
+                .filter(o -> o.getFolder_id().equals(folders.get(position).getId()))
                 .collect(Collectors.toList());
         System.out.println(folderWords);
         String wordNum = String.valueOf(folderWords.size());
@@ -65,7 +65,7 @@ public class FolderRecViewAdapter extends RecyclerView.Adapter<FolderRecViewAdap
         List<Review> reviewReadyWords = new ArrayList<>();
         for (Word word : reviewWords){
             Review review = reviews.stream()
-                    .filter(o -> o.getWordId() == word.getId() && !o.getTimer())
+                    .filter(o -> o.getWordId().equals(word.getId()) && !o.getTimer())
                     .findAny().orElse(null);
             if (review != null) {
                 reviewReadyWords.add(review);
@@ -77,14 +77,14 @@ public class FolderRecViewAdapter extends RecyclerView.Adapter<FolderRecViewAdap
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                long folderId = (long) holder.parent.getTag();
+                String folderId = (String) holder.parent.getTag();
                 folderActivity(folderId);
             }
         });
     }
 
     // Switch Activity -> FolderActivity
-    public void folderActivity(long folderId) {
+    public void folderActivity(String folderId) {
         Intent intent = new Intent(context, FolderActivity.class);
         intent.putExtra("FOLDER_ID", folderId);
         context.startActivity(intent);

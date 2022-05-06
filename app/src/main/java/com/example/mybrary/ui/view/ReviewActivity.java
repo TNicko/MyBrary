@@ -2,7 +2,6 @@ package com.example.mybrary.ui.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.animation.Animator;
@@ -13,16 +12,8 @@ import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.transition.ChangeBounds;
-import android.transition.Transition;
-import android.transition.TransitionManager;
 import android.util.DisplayMetrics;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.BounceInterpolator;
-import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
@@ -32,12 +23,10 @@ import android.widget.Toast;
 import com.example.mybrary.R;
 import com.example.mybrary.domain.model.Review;
 import com.example.mybrary.domain.model.Word;
-import com.example.mybrary.domain.util.OnReviewCardTouch;
+import com.example.mybrary.ui.adapter.OnReviewCardTouch;
 import com.example.mybrary.ui.viewmodel.ReviewViewModel;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -133,7 +122,7 @@ public class ReviewActivity extends AppCompatActivity {
                 backCard.setCardBackgroundColor(getResources().getColor(R.color.purple_200));
                 // Word Review Completed
                 if (dx > 450 || dx < -450) {
-                    final long wordId = words.get(0).getId();
+                    final String wordId = words.get(0).getId();
                     final long level = reviews.get(0).getLevel();
                     long newLevel = 0;
 

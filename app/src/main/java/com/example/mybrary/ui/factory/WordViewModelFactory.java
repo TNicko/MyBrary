@@ -12,9 +12,9 @@ import com.example.mybrary.ui.viewmodel.UpdateWordViewModel;
 public class WordViewModelFactory implements ViewModelProvider.Factory {
 
     private Application mApplication;
-    private Long mWordId;
+    private String mWordId;
 
-    public WordViewModelFactory(Application application, Long wordId) {
+    public WordViewModelFactory(Application application, String wordId) {
         mApplication = application;
         mWordId = wordId;
     }

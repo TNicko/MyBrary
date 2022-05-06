@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -23,13 +24,13 @@ public interface WordLocalDAO {
     public LiveData<List<WordEntity>> getAll();
 
     @Query("SELECT * FROM words WHERE folder_id=:folderId")
-    public LiveData<List<WordEntity>> getAllByFolder(Long folderId);
+    public LiveData<List<WordEntity>> getAllByFolder(String folderId);
 
     @Query("SELECT * FROM words WHERE id=:id")
     public List<WordEntity> getById(String id);
 
-    @Insert()
-    List<Long> add(WordEntity... word);
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    void add(WordEntity... word);
 
     @Delete
     void delete(WordEntity word);
@@ -41,8 +42,12 @@ public interface WordLocalDAO {
     public Cursor getAllCursor();
 
     @Query("SELECT * FROM words WHERE folder_id=:folderId")
-    public Cursor getAllByFolderCursor(Long folderId);
+    public Cursor getAllByFolderCursor(String folderId);
 
     @Query("SELECT * FROM words WHERE id=:id")
     public Cursor getByIdCursor(String id);
+
+    // Clear all data
+    @Query("DELETE FROM words")
+    public void nukeTable();
 }

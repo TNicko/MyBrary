@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -20,7 +21,7 @@ public interface FolderLocalDAO{
     @Query("SELECT * FROM folders")
     public LiveData<List<FolderEntity>> getAll();
 
-    @Insert()
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void add(FolderEntity... folder);
 
     @Delete
@@ -31,5 +32,9 @@ public interface FolderLocalDAO{
 
     @Query("SELECT * FROM folders")
     public Cursor getAllCursor();
+
+    // Clear all data
+    @Query("DELETE FROM folders")
+    public void nukeTable();
 
 }

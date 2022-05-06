@@ -6,17 +6,20 @@ import android.os.AsyncTask;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.mybrary.data.firebase.ReviewDAO;
 import com.example.mybrary.data.local.AppDatabase;
 import com.example.mybrary.data.local.dao.ReviewLocalDAO;
 import com.example.mybrary.data.local.dataMapper.ReviewDataMapper;
 import com.example.mybrary.data.local.entity.ReviewEntity;
 import com.example.mybrary.domain.model.Review;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class ReviewRepository {
 
     private ReviewLocalDAO localDao;
+    private ReviewDAO remoteDao;
     private ReviewDataMapper reviewMapper;
     private LiveData<List<Review>> readAllReviews;
     private MutableLiveData<List<Review>> review = new MutableLiveData<>();
@@ -35,7 +38,7 @@ public class ReviewRepository {
     }
 
     // Get review by id
-    public void getReviewById(Long id) {
+    public void getReviewById(String id) {
         String wordId = id.toString();
         QueryAsyncTask task = new QueryAsyncTask(localDao);
         task.delegate = this;
@@ -49,25 +52,58 @@ public class ReviewRepository {
 
     // Add review
     public void add(Review review) {
+        // -> local db
         InsertAsyncTask task = new InsertAsyncTask(localDao);
         task.execute(review);
+
+        // -> remote db
+        remoteDao = new ReviewDAO();
+        remoteDao.add(review);
     }
 
     // Update review
     public void update(Review review) {
+        // -> local db
         UpdateAsyncTask task = new UpdateAsyncTask(localDao);
         task.execute(review);
+
+        // -> remote db
+        remoteDao = new ReviewDAO();
+        remoteDao.update(review.getWordId(), review);
     }
 
     // Update review timer By ID
-    public void updateTimerById(Boolean timer, long id) {
+    public void updateTimerById(Boolean timer, String id) {
+        // -> local db
         localDao.updateTimer(timer, id);
+
+        // -> remote db
+        HashMap<String, Object> items = new HashMap<>();
+        items.put("timer", timer);
+        remoteDao = new ReviewDAO();
+        remoteDao.updateItem(id, items);
     }
 
     // Delete review
     public void delete(Review review) {
+        // -> local db
         DeleteAsyncTask task = new DeleteAsyncTask(localDao);
         task.execute(review);
+
+        // -> remote db
+        remoteDao = new ReviewDAO();
+        remoteDao.delete(review.getWordId());
+    }
+
+    // Add review locally on login
+    public void addOnLogin(Review review) {
+        InsertAsyncTask task = new InsertAsyncTask(localDao);
+        task.execute(review);
+    }
+
+    // Delete all data
+    public void nukeTable() {
+        localDao.nukeTable();
     }
 
     private void asyncQueryFinished(List<Review> results) {

@@ -11,9 +11,9 @@ import com.example.mybrary.ui.viewmodel.FolderViewModel;
 public class FolderViewModelFactory implements ViewModelProvider.Factory{
 
     private Application mApplication;
-    private Long mFolderId;
+    private String mFolderId;
 
-    public FolderViewModelFactory(Application application, Long folderId) {
+    public FolderViewModelFactory(Application application, String folderId) {
         mApplication = application;
         mFolderId = folderId;
     }

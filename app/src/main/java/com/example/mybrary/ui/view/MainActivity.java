@@ -8,10 +8,14 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,43 +51,14 @@ public class MainActivity extends AppCompatActivity {
     private ConstraintLayout reviewCard;
     private MaterialCardView reviewCardSection;
     private TextView reviewNum;
+    private ImageView settingsBtn;
     private List<Review> readyReviews;
     List<Word> reviewReadyWords = new ArrayList<>();
-
-    // authentication
-    private static final String TAG = "Firebase Login";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        FirebaseAuth fAuth = FirebaseAuth.getInstance();
-        Intent intent = getIntent();
-        String emailLink = intent.getData().toString();
-
-        if (fAuth.isSignInWithEmailLink(emailLink)) {
-            String vEmail = "email";
-            fAuth.signInWithEmailLink(vEmail, emailLink)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                Log.d(TAG, "Succesfully signed in with email link!");
-                                AuthResult result = task.getResult();
-                                FirebaseUser user = result.getUser();
-                                Boolean isNew = result.getAdditionalUserInfo().isNewUser();
-                                if (isNew) {
-                                    System.out.println("New User Created: " + user);
-                                } else {
-                                    System.out.println("Not new user: " +  user);
-                                }
-                            } else {
-                                Log.e(TAG, "Error signing in with email link", task.getException());
-                            }
-                        }
-                    });
-        }
 
         // Tracks and displays changes to network connection
         ConnectionLiveData connectionLiveData = new ConnectionLiveData(getApplicationContext());
@@ -113,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         reviewCard = findViewById(R.id.reviewConstraint);
         reviewCardSection = findViewById(R.id.includeCard);
         folderRecView = findViewById(R.id.folderRecView);
+        settingsBtn = findViewById(R.id.settingsBtn);
 
         // Display Recycle View of all folders
         folderAdapter = new FolderRecViewAdapter(this);
@@ -120,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(Triple<List<Folder>, List<Word>, List<Review>> listTriple) {
                 folderAdapter.setData(listTriple.getFirst(), listTriple.getSecond(), listTriple.getThird());
-
                 // All ready review objects
                 readyReviews = listTriple.getThird()
                         .stream()
@@ -132,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                 // All ready review words
                 for (Review review : readyReviews){
                     Word word = listTriple.getSecond().stream()
-                            .filter(o -> o.getId() == review.getWordId())
+                            .filter(o -> o.getId().equals(review.getWordId()))
                             .findAny().orElse(null);
                     if (word != null){
                         reviewReadyWords.add(word);
@@ -168,10 +143,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Settings button
+        settingsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                settingsActivity();
+            }
+        });
+
     }
 
     // Switch Activity -> FolderActivity
-    public void folderActivity(long folderId) {
+    public void folderActivity(String folderId) {
         Intent intent = new Intent(MainActivity.this, FolderActivity.class);
         intent.putExtra("FOLDER_ID", folderId);
         this.startActivity(intent);
@@ -192,6 +175,12 @@ public class MainActivity extends AppCompatActivity {
         bundleWords.putSerializable("WORD_LIST", (Serializable) reviewReadyWords);
         intent.putExtra("BUNDLE_REVIEW", bundleReviews);
         intent.putExtra("BUNDLE_WORD", bundleWords);
+        this.startActivity(intent);
+    }
+
+    // Switch Activity -> SettingsActivity
+    public void settingsActivity() {
+        Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
         this.startActivity(intent);
     }
 

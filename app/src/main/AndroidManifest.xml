@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.mybrary">
 
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -13,14 +16,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyBrary">
         <activity
+            android:name=".ui.view.SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.view.RegisterActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.view.LoginActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".ui.view.ReviewActivity"
@@ -40,20 +48,48 @@
         <activity
             android:name=".ui.view.MainActivity"
             android:exported="true">
-
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-                <data android:host="mybrary.com" android:scheme="https" android:pathPrefix="/learn"/>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="mybrary.com"
+                    android:pathPrefix="/learn"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity> <!-- Implements SyncAdapter. Needs to be exported so system sync framework can access it -->
+        <service
+            android:name=".data.service.SyncService"
+            android:exported="true"
+            android:process=":sync">
+
+            <!-- Allows the system to launch our sync service as needed. -->
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter" />
             </intent-filter>
 
-        </activity>
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/syncadapter" />
+        </service> <!-- Implements account used as an attachment point for our SyncAdapter -->
+        <service
+            android:name=".data.service.AuthenticationService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator" />
+        </service>
 
         <provider
             android:name=".data.provider.MyBraryContentProvider"
             android:authorities="com.example.mybrary.data.provider"
-            android:exported="true" />
+            android:exported="false" />
     </application>
 
 </manifest>

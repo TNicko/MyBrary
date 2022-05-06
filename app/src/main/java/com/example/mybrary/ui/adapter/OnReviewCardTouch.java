@@ -1,4 +1,4 @@
-package com.example.mybrary.domain.util;
+package com.example.mybrary.ui.adapter;
 
 import android.content.Context;
 import android.view.GestureDetector;

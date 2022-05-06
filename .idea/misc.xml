@@ -13,16 +13,19 @@
         <entry key="app/src/main/res/layout/activity_new_word.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.18385416666666668" />
         <entry key="app/src/main/res/layout/activity_review.xml" value="0.21873474121093753" />
+        <entry key="app/src/main/res/layout/activity_settings.xml" value="0.20052083333333334" />
         <entry key="app/src/main/res/layout/activity_update_word.xml" value="0.1" />
         <entry key="app/src/main/res/layout/folder_list.xml" value="0.26666666666666666" />
         <entry key="app/src/main/res/layout/review_card_back.xml" value="0.1" />
         <entry key="app/src/main/res/layout/review_card_front.xml" value="0.18020833333333333" />
-        <entry key="app/src/main/res/layout/review_notification_card.xml" value="0.2203125" />
+        <entry key="app/src/main/res/layout/review_notification_card.xml" value="0.262744140625" />
         <entry key="app/src/main/res/layout/reviewed_fragment.xml" value="0.10648148148148148" />
         <entry key="app/src/main/res/layout/reviewing_fragment.xml" value="0.10648148148148148" />
         <entry key="app/src/main/res/layout/test_card_back.xml" value="0.10648148148148148" />
         <entry key="app/src/main/res/layout/test_card_front.xml" value="0.10648148148148148" />
         <entry key="app/src/main/res/layout/word_list.xml" value="0.26666666666666666" />
+        <entry key="app/src/main/res/xml/authenticator.xml" value="0.20989583333333334" />
+        <entry key="app/src/main/res/xml/syncadapter.xml" value="0.3015625" />
       </map>
     </option>
   </component>

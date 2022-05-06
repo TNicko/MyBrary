@@ -60,7 +60,7 @@ public class FolderActivity extends AppCompatActivity {
 
         // Get data from Previous Activity
         Intent intent = getIntent();
-        long folderId = intent.getLongExtra("FOLDER_ID", 0);
+        String folderId = intent.getStringExtra("FOLDER_ID");
         System.out.println("FOLDER ID = "+folderId);
 
         // Get FolderViewModel
@@ -73,7 +73,7 @@ public class FolderActivity extends AppCompatActivity {
         folderViewModel.allWordInfo.observe(this, new Observer<Pair<List<Word>, List<Review>>>() {
             @Override
             public void onChanged(Pair<List<Word>, List<Review>> listListPair) {
-                System.out.println(listListPair);
+                System.out.println("word Info rec view: "+listListPair);
                 wordAdapter.setData(listListPair.first, listListPair.second);
 
             }
@@ -102,7 +102,7 @@ public class FolderActivity extends AppCompatActivity {
     }
 
     // Switch Activity -> newWordActivity
-    public void newWordActivity(long folderId) {
+    public void newWordActivity(String folderId) {
         Intent intent = new Intent(FolderActivity.this, NewWordActivity.class);
         intent.putExtra("FOLDER_ID", folderId);
         this.startActivity(intent);

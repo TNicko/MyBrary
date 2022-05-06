@@ -28,7 +28,7 @@ public class NewWordActivity extends AppCompatActivity {
 
     private NewWordViewModel newWordViewModel;
     private Button saveBtn, cancelBtn;
-    private Long folderId;
+    private String folderId;
     Boolean isReview;
 
     @Override
@@ -61,22 +61,11 @@ public class NewWordActivity extends AppCompatActivity {
 
         // Get data from FolderActivity
         Intent intent = getIntent();
-        folderId = intent.getLongExtra("FOLDER_ID", 0);
+        folderId = intent.getStringExtra("FOLDER_ID");
         System.out.println("FOLDER ID = "+folderId);
 
         saveBtn = findViewById(R.id.saveBtn);
         cancelBtn = findViewById(R.id.cancelBtn);
-
-        newWordViewModel.returnWordId().observe(this, new Observer<Long>() {
-            @Override
-            public void onChanged(Long aLong) {
-                System.out.println("word Id being saved in review = "+aLong);
-                newWordViewModel.checkReview(isReview, aLong);
-                if (isReview) {
-                    newWordViewModel.setCountdown(aLong);
-                }
-            }
-        });
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,4 +1,4 @@
-package com.example.mybrary.data;
+package com.example.mybrary.data.service;
 
 import android.accounts.Account;
 import android.content.AbstractThreadedSyncAdapter;

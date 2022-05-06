@@ -1,5 +1,6 @@
 package com.example.mybrary.data.local.entity;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -7,14 +8,15 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "folders")
 public class FolderEntity {
 
-    public FolderEntity(long id, String name) {
+    public FolderEntity(String id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey()
+    @NonNull
     @ColumnInfo(name = "id")
-    public long id;
+    public String id;
 
     @ColumnInfo(name = "name")
     public String name;

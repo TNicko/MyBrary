@@ -75,4 +75,6 @@ dependencies {
 
     def work_version = "2.7.1"
     implementation "androidx.work:work-runtime:$work_version"
+    def core_version = "1.6.0"
+    implementation "androidx.core:core:$core_version"
 }

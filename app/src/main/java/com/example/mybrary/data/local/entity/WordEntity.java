@@ -1,13 +1,16 @@
 package com.example.mybrary.data.local.entity;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import javax.annotation.Nonnull;
+
 @Entity(tableName = "words")
 public class WordEntity {
 
-    public WordEntity(long id, long folder_id, String word, String translation, String notes, boolean review) {
+    public WordEntity(String id, String folder_id, String word, String translation, String notes, boolean review) {
         this.id = id;
         this.folder_id = folder_id;
         this.word = word;
@@ -16,12 +19,13 @@ public class WordEntity {
         this.review = review;
     }
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey()
+    @NonNull
     @ColumnInfo(name = "id")
-    public long id;
+    public String id;
 
     @ColumnInfo(name = "folder_id")
-    public long folder_id;
+    public String folder_id;
 
     @ColumnInfo(name = "word")
     public String word;

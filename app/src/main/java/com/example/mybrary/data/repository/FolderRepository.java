@@ -7,10 +7,14 @@ import androidx.lifecycle.LiveData;
 
 import com.example.mybrary.data.firebase.FolderDAO;
 import com.example.mybrary.data.local.AppDatabase;
+import com.example.mybrary.data.local.dao.WordLocalDAO;
 import com.example.mybrary.data.local.dataMapper.FolderDataMapper;
+import com.example.mybrary.data.local.dataMapper.WordDataMapper;
 import com.example.mybrary.data.local.entity.FolderEntity;
 import com.example.mybrary.data.local.dao.FolderLocalDAO;
+import com.example.mybrary.data.local.entity.WordEntity;
 import com.example.mybrary.domain.model.Folder;
+import com.example.mybrary.domain.model.Word;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,59 +27,79 @@ public class FolderRepository {
     private LiveData<List<Folder>> readFolders;
 
     public FolderRepository(Application application) {
+
+        // local database
         AppDatabase db;
         db = AppDatabase.getDbInstance(application);
         localDao = db.folderDao();
         folderMapper = new FolderDataMapper();
         readFolders = folderMapper.fromLiveEntityList(localDao.getAll());
+
     }
-
-
-    // Dummy boolean
-    private final boolean isLocal = true;
 
     // Return All folders
     public LiveData<List<Folder>> getAllFolders() {
-        if (isLocal) {
-            return readFolders;
-        } else {
-            return null;
-        }
+        return readFolders;
     }
-
-//    // Get Folder by ID
-//    public Folder getFolderById() {
-//        if (isLocal) {
-//            return null;
-//        } else {
-//            return remoteDao.getFolderById();
-//        }
-//    }
 
     // Add folder
     public void add(Folder folder) {
-        if (isLocal) {
-            InsertAsyncTask task = new InsertAsyncTask(localDao);
-            task.execute(folder);
-        } else {
-            remoteDao.add(folder);
-        }
+        // -> local database
+        InsertAsyncTask task = new InsertAsyncTask(localDao);
+        task.execute(folder);
+
+        // -> remote database
+        remoteDao = new FolderDAO();
+        remoteDao.add(folder);
     }
 
     // Update folder
-    public void update(String key, HashMap<String, Object> hashMap) {
-        if (isLocal) {
-            localDao.update();
-        } else {
-            remoteDao.update(key, hashMap);
-        }
+    public void update(Folder folder) {
+        // -> local database
+        localDao.update();
 
-
+        // -> remote database
+        remoteDao = new FolderDAO();
+        remoteDao.update(folder.getId(), folder);
     }
 
     // Delete folder
-    public void delete(String key) {
-        remoteDao.delete(key);
+    public void delete(Folder folder) {
+        // -> local database
+        FolderRepository.DeleteAsyncTask task = new FolderRepository.DeleteAsyncTask(localDao);
+        task.execute(folder);
+
+        // ->remote database
+        remoteDao = new FolderDAO();
+        remoteDao.delete(folder.getId());
+    }
+
+    // Add folder locally on login
+    public void addOnLogin(Folder folder) {
+        InsertAsyncTask task = new InsertAsyncTask(localDao);
+        task.execute(folder);
+    }
+
+    // Delete all data
+    public void nukeTable() {
+        localDao.nukeTable();
+    }
+
+    private static class DeleteAsyncTask extends AsyncTask<Folder, Void, Void> {
+
+        private FolderLocalDAO asyncTaskDao;
+        private final FolderDataMapper folderMapper = new FolderDataMapper();
+
+        DeleteAsyncTask(FolderLocalDAO dao) {
+            asyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Folder... params) {
+            FolderEntity folderEntity = folderMapper.mapToEntity(params[0]);
+            asyncTaskDao.delete(folderEntity);
+            return null;
+        }
     }
 
     private static class InsertAsyncTask extends AsyncTask<Folder, Void, Void> {
@@ -96,26 +120,5 @@ public class FolderRepository {
         }
     }
 
-
-//    private static class QueryAsyncTask extends
-//            AsyncTask<String, Void, List<Folder>> {
-//
-//        private FolderLocalDAO asyncTaskDao;
-//        private FolderRepository delegate = null;
-//
-//        QueryAsyncTask(FolderLocalDAO dao) {
-//            asyncTaskDao = dao;
-//        }
-//
-//        @Override
-//        protected List<Folder> doInBackground(String... strings) {
-//            return asyncTaskDao.getAll();
-//        }
-//
-//        @Override
-//        protected void onPostExecute(List<Folder> result) {
-//            delegate.asyncFinished(result);
-//        }
-//    }
 
 }

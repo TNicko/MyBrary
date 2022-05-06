@@ -25,7 +25,7 @@ import java.util.List;
 public class UpdateWordActivity extends AppCompatActivity {
 
     private UpdateWordViewModel updateWordViewModel;
-    private Long folderId;
+    private String folderId;
     private EditText wordInput, translationInput, notesInput;
     private Button saveBtn, cancelBtn, deleteBtn;
     private SwitchMaterial switchInput;
@@ -59,8 +59,8 @@ public class UpdateWordActivity extends AppCompatActivity {
 
         // Get Data from Previous Activity
         Intent intent = getIntent();
-        long wordId = intent.getLongExtra("WORD_ID", 0);
-        folderId = intent.getLongExtra("FOLDER_ID", 0);
+        String wordId = intent.getStringExtra("WORD_ID");
+        folderId = intent.getStringExtra("FOLDER_ID");
         System.out.println("WORD ID = "+wordId);
 
         // Get UpdateWordViewModel

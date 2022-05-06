@@ -5,9 +5,11 @@
 
     <!-- Login / Register -->
     <string name="email">email</string>
-    <string name="code">code</string>
+    <string name="code">password</string>
     <string name="loginBtn">Submit</string>
-    <string name="register">Enter your email to begin</string>
+    <string name="registerBtn">Register</string>
+    <string name="register">Create Account</string>
+    <string name="login">Login</string>
     <string name="enter_code">Enter code sent to email</string>
 
     <!--  Main Activity -->
@@ -31,6 +33,9 @@
 
     <!-- Review Notification card -->
     <string name="review_text">reviews</string>
+
+    <!-- Settings -->
+    <string name="logout">logout</string>
 
     <!--  Review Card Animation parameters  -->
     <integer name="card_flip_time">1000</integer>

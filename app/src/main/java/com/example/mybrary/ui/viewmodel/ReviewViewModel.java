@@ -35,12 +35,12 @@ public class ReviewViewModel extends AndroidViewModel {
         allWords = wordRepo.getAllWords();
     }
 
-    public void updateReview(long wordId, Date date, long level){
+    public void updateReview(String wordId, Date date, long level){
         Review review = new Review(wordId, level, date, true);
         reviewRepo.update(review);
     }
 
-    public void setReviewCountdown(long wordId, long level){
+    public void setReviewCountdown(String wordId, long level){
 
         int newLevel = (int) level;
         int duration = levelToTimer(newLevel);
@@ -50,7 +50,7 @@ public class ReviewViewModel extends AndroidViewModel {
         System.out.println("Work Duration: "+duration + " "+timeUnit);
         WorkRequest workRequest = new OneTimeWorkRequest.Builder(UploadWorker.class)
                 .setInitialDelay(duration, timeUnit)
-                .setInputData(new Data.Builder().putLong("longVal", wordId).build())
+                .setInputData(new Data.Builder().putString("stringVal", wordId).build())
                 .build();
         WorkManager.getInstance(getApplication()).enqueue(workRequest);
     }

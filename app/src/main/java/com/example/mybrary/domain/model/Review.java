@@ -5,23 +5,23 @@ import java.util.Date;
 
 public class Review implements Serializable {
 
-    long wordId;
+    String wordId;
     long level;
     Date dateCreated;
     Boolean timer;
 
-    public Review(long wordId, long level, Date dateCreated, Boolean timer) {
+    public Review(String wordId, long level, Date dateCreated, Boolean timer) {
         this.wordId = wordId;
         this.level = level;
         this.dateCreated = dateCreated;
         this.timer = timer;
     }
 
-    public long getWordId() {
+    public String getWordId() {
         return wordId;
     }
 
-    public void setWordId(long wordId) {
+    public void setWordId(String wordId) {
         this.wordId = wordId;
     }
 

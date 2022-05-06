@@ -1,5 +1,6 @@
 package com.example.mybrary.data.local.entity;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -14,7 +15,7 @@ import java.util.Date;
 @Entity(tableName = "review")
 public class ReviewEntity {
 
-    public ReviewEntity(long wordId, long level, Date date_created, Boolean timer) {
+    public ReviewEntity(String wordId, long level, Date date_created, Boolean timer) {
         this.wordId = wordId;
         this.level = level;
         this.date_created = date_created;
@@ -22,8 +23,9 @@ public class ReviewEntity {
     }
 
     @PrimaryKey
+    @NonNull
     @ColumnInfo(name = "word_id")
-    public long wordId;
+    public String wordId;
 
     @ColumnInfo(name = "level")
     public long level;

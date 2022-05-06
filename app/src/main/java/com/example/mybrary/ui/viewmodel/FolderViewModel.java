@@ -25,7 +25,7 @@ public class FolderViewModel extends AndroidViewModel {
     public LiveData<Pair<List<Word>, List<Review>>> allWordInfo;
 
 
-    public FolderViewModel(Application application, Long folderId) {
+    public FolderViewModel(Application application, String folderId) {
         super(application);
         wordRepo = new WordRepository(application, folderId);
         words = wordRepo.getWords(folderId);

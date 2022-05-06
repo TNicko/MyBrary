@@ -25,9 +25,9 @@ public class UpdateWordViewModel extends AndroidViewModel {
     private ReviewRepository reviewRepo;
     public MutableLiveData<List<Word>> word;
     public MutableLiveData<List<Review>> review;
-    private Long wordId;
+    private String wordId;
 
-    public UpdateWordViewModel(Application application, Long id) {
+    public UpdateWordViewModel(Application application, String id) {
         super(application);
         wordId = id;
         wordRepo = new WordRepository(application);
@@ -57,15 +57,15 @@ public class UpdateWordViewModel extends AndroidViewModel {
         wordRepo.update(word);
     }
 
-    public void getWord(Long wordId){
+    public void getWord(String wordId){
         wordRepo.getWordById(wordId);
     }
 
-    public void getReview(Long wordId) {
+    public void getReview(String wordId) {
         reviewRepo.getReviewById(wordId);
     }
 
-    public String checkWordInput(long wordId, long folderId, String wordName, String translation, String notes, boolean review, boolean oldReview) {
+    public String checkWordInput(String wordId, String folderId, String wordName, String translation, String notes, boolean review, boolean oldReview) {
 
         if (wordName.equals("")) {
             return "word null";
@@ -93,7 +93,7 @@ public class UpdateWordViewModel extends AndroidViewModel {
             System.out.println("Work initiating...");
             WorkRequest workRequest = new OneTimeWorkRequest.Builder(UploadWorker.class)
                     .setInitialDelay(30, TimeUnit.SECONDS)
-                    .setInputData(new Data.Builder().putLong("longVal", word.getId()).build())
+                    .setInputData(new Data.Builder().putString("stringVal", word.getId()).build())
                     .build();
             WorkManager.getInstance(getApplication()).enqueue(workRequest);
         }

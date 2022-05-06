@@ -32,6 +32,7 @@ public class MyBraryContentProvider extends ContentProvider {
     private static final String AUTHORITY = "com.example.mybrary.data.provider";
     private static final String TABLE_FOLDERS = "folders";
     private static final String TABLE_WORDS = "words";
+    private static final String TABLE_REVIEWS = "reviews";
 //    public static final Uri URI_ITEM = Uri.parse("content://"+AUTHORITY+"/"+TABLE_FOLDERS);
 
     private static final int FOLDERS = 1;
@@ -39,6 +40,7 @@ public class MyBraryContentProvider extends ContentProvider {
     private static final int WORDS = 3;
     private static final int WORDS_ID = 4;
     private static final int FOLDER_WORDS = 5;
+    private static final int REVIEWS = 6;
 
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     static {
@@ -47,6 +49,7 @@ public class MyBraryContentProvider extends ContentProvider {
         uriMatcher.addURI(AUTHORITY, TABLE_WORDS, WORDS);
         uriMatcher.addURI(AUTHORITY, TABLE_WORDS+"/#", WORDS_ID);
         uriMatcher.addURI(AUTHORITY, TABLE_FOLDERS+"/#/"+TABLE_WORDS, FOLDER_WORDS);
+        uriMatcher.addURI(AUTHORITY, TABLE_REVIEWS, REVIEWS);
     }
 
     @Override
@@ -74,7 +77,7 @@ public class MyBraryContentProvider extends ContentProvider {
                 cursor = appDb.wordDao().getAllCursor();
                 break;
             case FOLDER_WORDS:
-                cursor = appDb.wordDao().getAllByFolderCursor(ContentUris.parseId(uri));
+                cursor = appDb.wordDao().getAllByFolderCursor(String.valueOf(uri));
                 break;
             default:
                 throw new IllegalArgumentException("Unkown URI: " + uri);

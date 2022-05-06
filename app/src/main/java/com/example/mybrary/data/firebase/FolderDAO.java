@@ -9,10 +9,12 @@ import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import org.checkerframework.checker.units.qual.A;
@@ -29,61 +31,16 @@ public class FolderDAO{
 
     private final DatabaseReference dbReference;
 
-    ExecutorService execService = Executors.newSingleThreadExecutor();
-    ListeningExecutorService lExecService = MoreExecutors.listeningDecorator(execService);
-
     public FolderDAO() {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
-        dbReference = db.getReference("Folder");
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        dbReference = db.getReference().child("folders").child(userId);
+        System.out.println("user key: "+userId);
     }
 
     // Get all folders
-    public List<Folder> getAllFolders() {
-
-        ListenableFuture<List<Folder>> asyncTask = lExecService.submit(
-                new Callable<List<Folder>>() {
-                    @Override
-                    public List<Folder> call() throws Exception {
-                        List<Folder> folders = new ArrayList<>();
-                        dbReference.orderByKey().addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot data : snapshot.getChildren()) {
-
-                                    Map<String,Object> td = (HashMap<String, Object>)data.getValue();
-                                    Folder folder = new Folder((Long) td.get("id"), td.get("name").toString());
-                                    folders.add(folder);
-                                }
-                                System.out.println(folders);
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-                        return folders;
-                    }
-                }
-        );
-        List<Folder> folders = new ArrayList<>();
-
-        Futures.addCallback(
-                asyncTask,
-                new FutureCallback<List<Folder>>() {
-                    @Override
-                    public void onSuccess(List<Folder> result) {
-                        System.out.println("Callback result: "+result);
-                    }
-
-                    @Override
-                    public void onFailure(Throwable t) {
-                        System.out.println("Future Callback (folder list) failed!");
-                    }
-                },
-                lExecService
-        );
-        return folders;
+    public Query getAllFolders() {
+        return dbReference.orderByKey();
     }
 
     // Get folder by id
@@ -94,7 +51,7 @@ public class FolderDAO{
 
     // Add folder
     public void add(Folder folder) {
-        dbReference.push().setValue(folder);
+        dbReference.child(folder.getId()).setValue(folder);
     }
 
     // Delete folder
@@ -103,9 +60,13 @@ public class FolderDAO{
     }
 
     // Update folder
-    public void update(String key, HashMap<String, Object> hashMap) {
-        dbReference.child(key).updateChildren(hashMap);
+    public void update(String key, Folder folder) {
+        dbReference.child(key).setValue(folder);
+    }
 
+    // update item(s) in folder
+    public void updateItem(String key, HashMap<String, Object> hashMap) {
+        dbReference.child(key).updateChildren(hashMap);
     }
 
 }

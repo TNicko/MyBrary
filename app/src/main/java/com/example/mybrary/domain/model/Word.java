@@ -4,14 +4,14 @@ import java.io.Serializable;
 
 public class Word implements Serializable {
 
-    private long id;
-    private long folder_id;
+    private String id;
+    private String folder_id;
     private String word;
     private String translation;
     private String notes;
     private boolean review;
 
-    public Word(long id, long folder_id, String word, String translation, String notes, boolean review) {
+    public Word(String id, String folder_id, String word, String translation, String notes, boolean review) {
         this.id = id;
         this.folder_id = folder_id;
         this.word = word;
@@ -20,19 +20,19 @@ public class Word implements Serializable {
         this.review = review;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public long getFolder_id() {
+    public String getFolder_id() {
         return folder_id;
     }
 
-    public void setFolder_id(long folder_id) {
+    public void setFolder_id(String folder_id) {
         this.folder_id = folder_id;
     }
 
