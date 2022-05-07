@@ -14,6 +14,7 @@
 
     <!--  Main Activity -->
     <string name="add_folder_btn">AddFolderBtn</string>
+    <string name="userGuide">User guide</string>
 
     <!--  Folder Activity -->
     <string name="folder_title_hint">Folder title</string>

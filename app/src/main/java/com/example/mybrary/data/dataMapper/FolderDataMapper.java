@@ -1,4 +1,4 @@
-package com.example.mybrary.data.local.dataMapper;
+package com.example.mybrary.data.dataMapper;
 
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
@@ -6,18 +6,16 @@ import androidx.lifecycle.Transformations;
 
 import com.example.mybrary.data.local.entity.FolderEntity;
 import com.example.mybrary.domain.model.Folder;
-import com.example.mybrary.domain.util.EntityMapper;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class FolderDataMapper implements EntityMapper<FolderEntity, Folder> {
-    @Override
+public class FolderDataMapper {
+
     public Folder mapFromEntity(FolderEntity entity) {
         return new Folder(entity.id, entity.name);
     }
 
-    @Override
     public FolderEntity mapToEntity(Folder domainModel) {
         return new FolderEntity(domainModel.getId(), domainModel.getName());
     }

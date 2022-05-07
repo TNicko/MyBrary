@@ -16,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyBrary">
         <activity
+            android:name=".ui.view.UserGuideActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.view.SettingsActivity"
             android:exported="false" />
         <activity

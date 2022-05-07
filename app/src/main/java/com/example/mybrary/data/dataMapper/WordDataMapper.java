@@ -1,25 +1,21 @@
-package com.example.mybrary.data.local.dataMapper;
+package com.example.mybrary.data.dataMapper;
 
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 import com.example.mybrary.data.local.entity.WordEntity;
 import com.example.mybrary.domain.model.Word;
-import com.example.mybrary.domain.util.EntityMapper;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class WordDataMapper implements EntityMapper<WordEntity, Word> {
+public class WordDataMapper {
 
-    @Override
     public Word mapFromEntity(WordEntity entity) {
         return new Word(entity.id, entity.folder_id, entity.word, entity.translation, entity.notes, entity.review);
     }
 
-    @Override
     public WordEntity mapToEntity(Word domainModel) {
         return new WordEntity(domainModel.getId(), domainModel.getFolder_id(), domainModel.getWord(), domainModel.getTranslation(), domainModel.getNotes(), domainModel.isReview());
     }

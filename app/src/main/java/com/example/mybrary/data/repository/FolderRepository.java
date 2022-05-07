@@ -5,18 +5,13 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.mybrary.data.firebase.FolderDAO;
+import com.example.mybrary.data.firebase.dao.FolderDAO;
 import com.example.mybrary.data.local.AppDatabase;
-import com.example.mybrary.data.local.dao.WordLocalDAO;
-import com.example.mybrary.data.local.dataMapper.FolderDataMapper;
-import com.example.mybrary.data.local.dataMapper.WordDataMapper;
+import com.example.mybrary.data.dataMapper.FolderDataMapper;
 import com.example.mybrary.data.local.entity.FolderEntity;
 import com.example.mybrary.data.local.dao.FolderLocalDAO;
-import com.example.mybrary.data.local.entity.WordEntity;
 import com.example.mybrary.domain.model.Folder;
-import com.example.mybrary.domain.model.Word;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class FolderRepository {

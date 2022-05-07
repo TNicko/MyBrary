@@ -5,17 +5,14 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.loader.content.AsyncTaskLoader;
-import androidx.room.Delete;
 
-import com.example.mybrary.data.firebase.WordDAO;
+import com.example.mybrary.data.firebase.dao.WordDAO;
 import com.example.mybrary.data.local.AppDatabase;
 import com.example.mybrary.data.local.dao.WordLocalDAO;
-import com.example.mybrary.data.local.dataMapper.WordDataMapper;
+import com.example.mybrary.data.dataMapper.WordDataMapper;
 import com.example.mybrary.data.local.entity.WordEntity;
 import com.example.mybrary.domain.model.Word;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class WordRepository {

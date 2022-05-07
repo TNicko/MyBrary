@@ -14,18 +14,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mybrary.R;
-import com.example.mybrary.data.firebase.FolderDAO;
-import com.example.mybrary.domain.model.Folder;
 import com.example.mybrary.ui.viewmodel.LoginViewModel;
-import com.example.mybrary.ui.viewmodel.MainViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 

@@ -15,6 +15,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +46,7 @@ import kotlin.Triple;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Button webviewBtn;
     private RecyclerView folderRecView;
     private FloatingActionButton addFolderBtn;
     private FolderRecViewAdapter folderAdapter;
@@ -83,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         // Get MainViewModel
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
+        webviewBtn = findViewById(R.id.webViewBtn);
         reviewNum = findViewById(R.id.reviewNum);
         addFolderBtn = findViewById(R.id.addFolderBtn);
         reviewCard = findViewById(R.id.reviewConstraint);
@@ -151,6 +155,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // User Guide button
+        webviewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                userGuideActivity();
+            }
+        });
+
     }
 
     // Switch Activity -> FolderActivity
@@ -181,6 +193,12 @@ public class MainActivity extends AppCompatActivity {
     // Switch Activity -> SettingsActivity
     public void settingsActivity() {
         Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+        this.startActivity(intent);
+    }
+
+    // Switch Activity -> UserGuideActivity
+    public void userGuideActivity() {
+        Intent intent = new Intent(MainActivity.this, UserGuideActivity.class);
         this.startActivity(intent);
     }
 

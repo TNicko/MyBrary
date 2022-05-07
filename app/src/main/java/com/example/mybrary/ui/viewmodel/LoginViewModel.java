@@ -5,9 +5,9 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
-import com.example.mybrary.data.firebase.FolderDAO;
-import com.example.mybrary.data.firebase.ReviewDAO;
-import com.example.mybrary.data.firebase.WordDAO;
+import com.example.mybrary.data.firebase.dao.FolderDAO;
+import com.example.mybrary.data.firebase.dao.ReviewDAO;
+import com.example.mybrary.data.firebase.dao.WordDAO;
 import com.example.mybrary.data.repository.FolderRepository;
 import com.example.mybrary.data.repository.ReviewRepository;
 import com.example.mybrary.data.repository.WordRepository;
@@ -18,9 +18,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class LoginViewModel extends AndroidViewModel {
@@ -92,12 +92,14 @@ public class LoginViewModel extends AndroidViewModel {
                 for (DataSnapshot data : snapshot.getChildren()) {
                     Map<String, Object> td = (HashMap<String, Object>) data.getValue();
                     long level = Long.parseLong(td.get("level").toString());
-                    Date dateCreated = (Date) td.get("dateCreated");
+                    long dateCreated = Long.parseLong(td.get("dateCreated").toString());
+                    Date date = new Date(dateCreated);
+                    System.out.println("timestamp: "+dateCreated);
                     boolean timer = (boolean) td.get("timer");
                     Review review = new Review(
                             td.get("wordId").toString(),
                             level,
-                            dateCreated,
+                            date,
                             timer
                     );
                     reviewRepo.addOnLogin(review);

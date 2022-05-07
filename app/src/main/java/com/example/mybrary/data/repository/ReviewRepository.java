@@ -6,10 +6,10 @@ import android.os.AsyncTask;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.mybrary.data.firebase.ReviewDAO;
+import com.example.mybrary.data.firebase.dao.ReviewDAO;
 import com.example.mybrary.data.local.AppDatabase;
 import com.example.mybrary.data.local.dao.ReviewLocalDAO;
-import com.example.mybrary.data.local.dataMapper.ReviewDataMapper;
+import com.example.mybrary.data.dataMapper.ReviewDataMapper;
 import com.example.mybrary.data.local.entity.ReviewEntity;
 import com.example.mybrary.domain.model.Review;
 
@@ -58,7 +58,7 @@ public class ReviewRepository {
 
         // -> remote db
         remoteDao = new ReviewDAO();
-        remoteDao.add(review);
+        remoteDao.add(reviewMapper.mapToFirebase(review));
     }
 
     // Update review
@@ -69,7 +69,7 @@ public class ReviewRepository {
 
         // -> remote db
         remoteDao = new ReviewDAO();
-        remoteDao.update(review.getWordId(), review);
+        remoteDao.update(review.getWordId(), reviewMapper.mapToFirebase(review));
     }
 
     // Update review timer By ID

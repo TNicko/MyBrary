@@ -1,5 +1,6 @@
-package com.example.mybrary.data.firebase;
+package com.example.mybrary.data.firebase.dao;
 
+import com.example.mybrary.data.firebase.entity.ReviewFirebase;
 import com.example.mybrary.domain.model.Review;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -24,7 +25,7 @@ public class ReviewDAO {
     }
 
     // Add review
-    public void add(Review review) {
+    public void add(ReviewFirebase review) {
         dbReference.child(review.getWordId()).setValue(review);
     }
 
@@ -34,7 +35,7 @@ public class ReviewDAO {
     }
 
     // Update review
-    public void update(String key, Review review) {
+    public void update(String key, ReviewFirebase review) {
         dbReference.child(key).setValue(review);
     }
 

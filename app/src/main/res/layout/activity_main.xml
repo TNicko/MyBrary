@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".ui.view.MainActivity">
 
+    <Button
+        android:id="@+id/webViewBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/userGuide"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="10dp"/>
+
     <ImageView
         android:id="@+id/settingsBtn"
         android:layout_width="50dp"
