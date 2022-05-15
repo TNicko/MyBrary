@@ -33,7 +33,6 @@ public class UploadWorker extends Worker {
 
         String wordId = getInputData().getString("stringVal");
         reviewRepo.updateTimerById(false, wordId);
-        System.out.println("Work Success!");
 
         // Create notification
         notification.newReviewNotification();

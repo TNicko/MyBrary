@@ -28,7 +28,7 @@ public class NewWordActivity extends AppCompatActivity {
 
     private NewWordViewModel newWordViewModel;
     private Button saveBtn, cancelBtn;
-    private String folderId;
+    private String folderId, folderName;
     Boolean isReview;
 
     @Override
@@ -62,7 +62,7 @@ public class NewWordActivity extends AppCompatActivity {
         // Get data from FolderActivity
         Intent intent = getIntent();
         folderId = intent.getStringExtra("FOLDER_ID");
-        System.out.println("FOLDER ID = "+folderId);
+        folderName = intent.getStringExtra("FOLDER_NAME");
 
         saveBtn = findViewById(R.id.saveBtn);
         cancelBtn = findViewById(R.id.cancelBtn);
@@ -108,6 +108,8 @@ public class NewWordActivity extends AppCompatActivity {
     public void newWordActivity() {
         Intent intent = new Intent(NewWordActivity.this, FolderActivity.class);
         intent.putExtra("FOLDER_ID", folderId);
+        intent.putExtra("FOLDER_NAME", folderName);
+        System.out.println("FOlder name: "+folderName);
         this.startActivity(intent);
     }
 }

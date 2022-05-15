@@ -46,8 +46,6 @@ public class ReviewViewModel extends AndroidViewModel {
         int duration = levelToTimer(newLevel);
         TimeUnit timeUnit = levelToTimeUnit(newLevel);
 
-        System.out.println("Work initiating...");
-        System.out.println("Work Duration: "+duration + " "+timeUnit);
         WorkRequest workRequest = new OneTimeWorkRequest.Builder(UploadWorker.class)
                 .setInitialDelay(duration, timeUnit)
                 .setInputData(new Data.Builder().putString("stringVal", wordId).build())
@@ -113,7 +111,6 @@ public class ReviewViewModel extends AndroidViewModel {
                 return 28; // day
             }
             default:
-                System.out.println("ERROR (level to time conversion)");
                 return 0;
         }
     }

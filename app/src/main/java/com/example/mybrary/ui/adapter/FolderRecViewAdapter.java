@@ -52,7 +52,6 @@ public class FolderRecViewAdapter extends RecyclerView.Adapter<FolderRecViewAdap
         List<Word> folderWords = words.stream()
                 .filter(o -> o.getFolder_id().equals(folders.get(position).getId()))
                 .collect(Collectors.toList());
-        System.out.println(folderWords);
         String wordNum = String.valueOf(folderWords.size());
         holder.txtWordNum.setText(wordNum);
 
@@ -78,15 +77,16 @@ public class FolderRecViewAdapter extends RecyclerView.Adapter<FolderRecViewAdap
             @Override
             public void onClick(View view) {
                 String folderId = (String) holder.parent.getTag();
-                folderActivity(folderId);
+                folderActivity(folderId, folders.get(position).getName());
             }
         });
     }
 
     // Switch Activity -> FolderActivity
-    public void folderActivity(String folderId) {
+    public void folderActivity(String folderId, String folderName) {
         Intent intent = new Intent(context, FolderActivity.class);
         intent.putExtra("FOLDER_ID", folderId);
+        intent.putExtra("FOLDER_NAME", folderName);
         context.startActivity(intent);
     }
 

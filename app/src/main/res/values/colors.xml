@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
+
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
     <color name="grey">#DDD</color>
     <color name="darkGrey">#CDCDCD</color>
-
     <color name="reviewCardOpaque">#F4F4F4</color>
+
+    <!-- Light Theme Palette 1 -->
+    <color name="backgroundColor">#F3F6F0</color>
+    <color name="pink_100">#83122F</color>
+    <color name="pink_10">#EEADBE</color>
+    <color name="black_coffee">#38302E</color>
+    <color name="emerald">#8BC34A</color>
+    <color name="emerald_dark">#6CBD0E</color>
+    <color name="green_pale">#D3D8CF</color>
+
+
+
+    <!-- Palette 2-->
 
 </resources>

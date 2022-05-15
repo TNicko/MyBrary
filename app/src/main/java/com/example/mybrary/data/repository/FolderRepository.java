@@ -108,7 +108,6 @@ public class FolderRepository {
 
         @Override
         protected Void doInBackground(Folder... folder) {
-            System.out.println(folder[0]);
             FolderEntity folderEntity = folderMapper.mapToEntity(folder[0]);
             asyncTaskDao.add(folderEntity);
             return null;

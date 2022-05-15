@@ -29,6 +29,7 @@ public class WordRecViewAdapter extends RecyclerView.Adapter<WordRecViewAdapter.
     private List<Word> words = new ArrayList<>();
     private List<Review> reviews = new ArrayList<>();
     private final Context context;
+    private String folderName;
 
     public WordRecViewAdapter(Context context) {
         this.context = context;
@@ -71,16 +72,17 @@ public class WordRecViewAdapter extends RecyclerView.Adapter<WordRecViewAdapter.
             @Override
             public void onClick(View view) {
                 String wordId = (String) holder.parent.getTag();
-                updateWordActivity(wordId, folderId);
+                updateWordActivity(wordId, folderId, folderName);
             }
         });
     }
 
     // Switch Activity -> updateWordActivity
-    public void updateWordActivity(String wordId, String folderId) {
+    public void updateWordActivity(String wordId, String folderId, String folderName) {
         Intent intent = new Intent(context, UpdateWordActivity.class);
         intent.putExtra("WORD_ID", wordId);
         intent.putExtra("FOLDER_ID", folderId);
+        intent.putExtra("FOLDER_NAME", folderName);
         context.startActivity(intent);
     }
 
@@ -89,9 +91,10 @@ public class WordRecViewAdapter extends RecyclerView.Adapter<WordRecViewAdapter.
         return words.size();
     }
 
-    public void setData(List<Word> words, List<Review> reviews) {
+    public void setData(List<Word> words, List<Review> reviews, String folderName) {
         this.words = words;
         this.reviews = reviews;
+        this.folderName = folderName;
         notifyDataSetChanged();
     }
 

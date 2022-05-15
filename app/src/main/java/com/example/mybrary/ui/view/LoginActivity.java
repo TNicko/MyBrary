@@ -18,6 +18,7 @@ import com.example.mybrary.ui.viewmodel.LoginViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,9 +28,11 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private LoginViewModel loginViewModel;
 
-    Button loginBtn, registerBtn;
-    TextInputEditText emailInput, passwordInput;
-    TextView registerTxt;
+    private Button loginBtn;
+    private TextView registerBtn;
+    private TextInputLayout emailLayout, passwordLayout;
+    private TextInputEditText emailInput, passwordInput;
+    private TextView registerTxt;
 
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     private static final String TAG = "Authentication: ";
@@ -56,6 +59,8 @@ public class LoginActivity extends AppCompatActivity {
         passwordInput = findViewById(R.id.passwordInput);
         registerTxt = findViewById(R.id.registerTxt);
         registerBtn = findViewById(R.id.registerBtn);
+        passwordLayout = findViewById(R.id.passwordField);
+        emailLayout = findViewById(R.id.textField);
 
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,13 +77,13 @@ public class LoginActivity extends AppCompatActivity {
 
                 // Validation
                 if (TextUtils.isEmpty(email)) {
-                    emailInput.setError("Email is required");
+                    emailLayout.setError("Email is required");
                 }
                 else if (!email.matches(emailPattern)) {
-                    emailInput.setError("Email is invalid");
+                    emailLayout.setError("Email is invalid");
                 }
                 else if (TextUtils.isEmpty(password)) {
-                    passwordInput.setError("Password is required");
+                    passwordLayout.setError("Password is required");
                 }
                 else {
                     loginUser(email, password);

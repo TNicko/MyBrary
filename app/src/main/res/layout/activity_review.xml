@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.view.ReviewActivity"
-    android:id="@+id/rootLayout">
+    android:id="@+id/rootLayout"
+    android:background="@color/backgroundColor">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/progressLayout"
@@ -70,7 +71,7 @@
         android:scaleType="fitCenter"
         android:src="@drawable/ic_next_arrow"
         app:rippleColor="@color/white"
-        android:backgroundTint="@color/purple_700"
+        android:backgroundTint="@color/emerald"
         android:visibility="gone"/>
 
 

@@ -49,7 +49,6 @@ public class UpdateWordViewModel extends AndroidViewModel {
     public void deleteReview() {
         if (review.getValue().size() > 0){
             reviewRepo.delete(review.getValue().get(0));
-            System.out.println("Review deleted");
         }
     }
 
@@ -85,12 +84,10 @@ public class UpdateWordViewModel extends AndroidViewModel {
     public void checkReview(Word word, Boolean oldReview){
         // Turned on review (add review)
         if (word.isReview() && !oldReview) {
-            System.out.println("now reviewable");
             Date currentDate = new Date();
             Review newReview = new Review(word.getId(), 0, currentDate, true);
             reviewRepo.add(newReview);
 
-            System.out.println("Work initiating...");
             WorkRequest workRequest = new OneTimeWorkRequest.Builder(UploadWorker.class)
                     .setInitialDelay(30, TimeUnit.SECONDS)
                     .setInputData(new Data.Builder().putString("stringVal", word.getId()).build())
@@ -99,7 +96,6 @@ public class UpdateWordViewModel extends AndroidViewModel {
         }
         // Turned off review (delete review)
         else if (!word.isReview() && oldReview) {
-            System.out.println("now not reviewable");
             deleteReview();
         }
     }

@@ -25,7 +25,7 @@ import java.util.List;
 public class UpdateWordActivity extends AppCompatActivity {
 
     private UpdateWordViewModel updateWordViewModel;
-    private String folderId;
+    private String folderId, folderName;
     private EditText wordInput, translationInput, notesInput;
     private Button saveBtn, cancelBtn, deleteBtn;
     private SwitchMaterial switchInput;
@@ -61,7 +61,7 @@ public class UpdateWordActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String wordId = intent.getStringExtra("WORD_ID");
         folderId = intent.getStringExtra("FOLDER_ID");
-        System.out.println("WORD ID = "+wordId);
+        folderName = intent.getStringExtra("FOLDER_NAME");
 
         // Get UpdateWordViewModel
         updateWordViewModel = new ViewModelProvider(this, new WordViewModelFactory(this.getApplication(), wordId)).get(UpdateWordViewModel.class);
@@ -132,6 +132,7 @@ public class UpdateWordActivity extends AppCompatActivity {
     public void folderActivity() {
         Intent intent = new Intent(UpdateWordActivity.this, FolderActivity.class);
         intent.putExtra("FOLDER_ID", folderId);
+        intent.putExtra("FOLDER_NAME", folderName);
         this.startActivity(intent);
     }
 }

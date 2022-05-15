@@ -52,7 +52,6 @@ public class LoginViewModel extends AndroidViewModel {
                     Map<String,Object> td = (HashMap<String, Object>)data.getValue();
                     Folder folder = new Folder(td.get("id").toString(), td.get("name").toString());
                     folderRepo.addOnLogin(folder);
-                    System.out.println("Added folder: "+ folder);
                 }
             }
             @Override
@@ -75,7 +74,6 @@ public class LoginViewModel extends AndroidViewModel {
                             td.get("notes").toString(),
                             review);
                     wordRepo.addOnLogin(word);
-                    System.out.println("Added word: "+word);
                 }
             }
 
@@ -94,7 +92,6 @@ public class LoginViewModel extends AndroidViewModel {
                     long level = Long.parseLong(td.get("level").toString());
                     long dateCreated = Long.parseLong(td.get("dateCreated").toString());
                     Date date = new Date(dateCreated);
-                    System.out.println("timestamp: "+dateCreated);
                     boolean timer = (boolean) td.get("timer");
                     Review review = new Review(
                             td.get("wordId").toString(),
@@ -103,7 +100,6 @@ public class LoginViewModel extends AndroidViewModel {
                             timer
                     );
                     reviewRepo.addOnLogin(review);
-                    System.out.println("Added review: "+review);
                 }
             }
             @Override

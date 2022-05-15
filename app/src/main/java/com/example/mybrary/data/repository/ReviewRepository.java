@@ -144,7 +144,6 @@ public class ReviewRepository {
 
         @Override
         protected Void doInBackground(Review... params) {
-            System.out.println(params[0]);
             ReviewEntity reviewEntity = reviewMapper.mapToEntity(params[0]);
             asyncTaskDao.add(reviewEntity);
             return null;
@@ -163,7 +162,6 @@ public class ReviewRepository {
 
         @Override
         protected Void doInBackground(Review... params) {
-            System.out.println(params[0]);
             ReviewEntity reviewEntity = reviewMapper.mapToEntity(params[0]);
             asyncTaskDao.update(reviewEntity);
             return null;

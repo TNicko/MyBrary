@@ -164,7 +164,6 @@ public class WordRepository {
 
         @Override
         protected Void doInBackground(Word... words) {
-            System.out.println(words[0]);
             WordEntity wordEntity = wordMapper.mapToEntity(words[0]);
             asyncTaskDao.update(wordEntity);
             return null;

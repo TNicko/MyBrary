@@ -33,7 +33,6 @@ public class NewFolderActivity extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("Save Button Clicked");
                 TextInputEditText folderInputField =  findViewById(R.id.folderInput);
                 String folderInput = folderInputField.getText().toString();
                 // !!! pass to function in viewmodel

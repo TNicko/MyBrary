@@ -35,7 +35,6 @@ public class FolderDAO{
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         dbReference = db.getReference().child("folders").child(userId);
-        System.out.println("user key: "+userId);
     }
 
     // Get all folders

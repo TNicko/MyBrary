@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mybrary.R;
@@ -16,6 +17,7 @@ import com.example.mybrary.domain.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,6 +30,8 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference mDatabase;
     private TextInputEditText emailInput, passwordInput;
+    private TextInputLayout emailLayout, passwordLayout;
+    private TextView loginBtn;
     private FirebaseAuth mAuth;
     private User user;
     private static final String USER = "users";
@@ -42,10 +46,20 @@ public class RegisterActivity extends AppCompatActivity {
         registerBtn = findViewById(R.id.registerBtn);
         emailInput = findViewById(R.id.emailInput);
         passwordInput = findViewById(R.id.passwordInput);
+        loginBtn = findViewById(R.id.loginBtn);
+        passwordLayout = findViewById(R.id.passwordField);
+        emailLayout = findViewById(R.id.textField);
 
         database = FirebaseDatabase.getInstance();
         mDatabase = database.getReference(USER);
         mAuth = FirebaseAuth.getInstance();
+
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loginActivity();
+            }
+        });
 
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,13 +68,13 @@ public class RegisterActivity extends AppCompatActivity {
                 String password = passwordInput.getText().toString();
 
                 if (TextUtils.isEmpty(email)) {
-                    emailInput.setError("Email is required");
+                    emailLayout.setError("Email is required");
                 }
                 else if (TextUtils.isEmpty(password)) {
-                    passwordInput.setError("Email is required");
+                    passwordLayout.setError("Email is required");
                 }
                 else if (!email.matches(emailPattern)){
-                    emailInput.setError("Invalid email");
+                    emailLayout.setError("Invalid email");
                 }
                 else {
                     registerUser(email, password);

@@ -23,7 +23,6 @@ public class NewFolderViewModel extends AndroidViewModel {
     public String checkFolderInput(String folderInput) {
 
         if (folderInput.equals("")) {
-            System.out.println("folder input empty");
             return "null";
         } else {
             String uui = UUID.randomUUID().toString();

@@ -6,7 +6,10 @@
     android:layout_height="wrap_content"
     android:id="@+id/reviewCard"
     app:cardElevation="2dp"
-    app:cardBackgroundColor="@color/grey">
+    app:cardBackgroundColor="@color/green_pale"
+    app:strokeWidth="2dp"
+    app:strokeColor="@color/darkGrey">
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

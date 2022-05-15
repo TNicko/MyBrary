@@ -10,7 +10,7 @@
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:elevation="1dp"
-        app:cardBackgroundColor="@color/purple_200">
+        app:cardBackgroundColor="@color/grey">
 
         <RelativeLayout
             android:layout_width="match_parent"

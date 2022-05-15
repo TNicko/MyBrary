@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ public class FolderActivity extends AppCompatActivity {
     private WordRecViewAdapter wordAdapter;
     private FolderViewModel folderViewModel;
     private TextView logo;
+    private TextView folderNameField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +63,10 @@ public class FolderActivity extends AppCompatActivity {
         // Get data from Previous Activity
         Intent intent = getIntent();
         String folderId = intent.getStringExtra("FOLDER_ID");
-        System.out.println("FOLDER ID = "+folderId);
+        String folderName = intent.getStringExtra("FOLDER_NAME");
+
+        folderNameField = findViewById(R.id.folderNameField);
+        folderNameField.setText(folderName);
 
         // Get FolderViewModel
 //        folderViewModel = new ViewModelProvider(this).get(FolderViewModel.class);
@@ -73,8 +78,7 @@ public class FolderActivity extends AppCompatActivity {
         folderViewModel.allWordInfo.observe(this, new Observer<Pair<List<Word>, List<Review>>>() {
             @Override
             public void onChanged(Pair<List<Word>, List<Review>> listListPair) {
-                System.out.println("word Info rec view: "+listListPair);
-                wordAdapter.setData(listListPair.first, listListPair.second);
+                wordAdapter.setData(listListPair.first, listListPair.second, folderName);
 
             }
         });
@@ -87,7 +91,7 @@ public class FolderActivity extends AppCompatActivity {
         addWordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                newWordActivity(folderId);
+                newWordActivity(folderId, folderName);
             }
         });
 
@@ -102,9 +106,10 @@ public class FolderActivity extends AppCompatActivity {
     }
 
     // Switch Activity -> newWordActivity
-    public void newWordActivity(String folderId) {
+    public void newWordActivity(String folderId, String folderName) {
         Intent intent = new Intent(FolderActivity.this, NewWordActivity.class);
         intent.putExtra("FOLDER_ID", folderId);
+        intent.putExtra("FOLDER_NAME", folderName);
         this.startActivity(intent);
     }
 

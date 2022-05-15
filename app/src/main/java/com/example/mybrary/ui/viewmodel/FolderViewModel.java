@@ -32,7 +32,6 @@ public class FolderViewModel extends AndroidViewModel {
         reviewRepo = new ReviewRepository(application);
         allReviews = reviewRepo.getAllReviews();
         allWordInfo = new CombinedLiveData(words, allReviews);
-        System.out.println(allWordInfo.getValue());
     }
 
     LiveData<List<Word>> returnWords() {

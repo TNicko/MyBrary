@@ -128,7 +128,6 @@ public class ReviewActivity extends AppCompatActivity {
 
                     // Decrease word level
                     if (dx < -450){
-                        System.out.println("Incorrect!");
                         cardContainer.setVisibility(View.INVISIBLE);
                         // if level already 0
                         if (level == 0) {
@@ -139,7 +138,6 @@ public class ReviewActivity extends AppCompatActivity {
                         }
                     // Increase word level
                     } else if (dx > 450) {
-                        System.out.println("Correct!");
                         cardContainer.setVisibility(View.INVISIBLE);
                         newLevel = level + 1;
                     }
@@ -154,7 +152,6 @@ public class ReviewActivity extends AppCompatActivity {
 
             @Override
             public void onSwipeLeft() {
-                System.out.println("SWIPED LEFT");
                 Toast.makeText(ReviewActivity.this, "left swipe", Toast.LENGTH_SHORT).show();
             }
 
@@ -331,16 +328,7 @@ public class ReviewActivity extends AppCompatActivity {
         int fromYDelta = (viewBot - viewTop)/2;
         int toYDelta = yDest - (originalPos[1]*2); // "*2" slightly higher than center
         int toXDelta = xDest  - originalPos[0];
-//        int fromYDelta = viewTop;
 
-        System.out.println("viewTop: "+viewTop);
-        System.out.println("viewBot: "+viewBot);
-        System.out.println("xDest: "+xDest);
-        System.out.println("location X: "+originalPos[0]);
-        System.out.println("yDest: "+ yDest);
-        System.out.println("fromYDelta: "+fromYDelta);
-        System.out.println("toYDelta: "+toYDelta);
-        System.out.println("toXDelta: "+toXDelta);
 
         List<Integer> translateInts = new ArrayList<>();
         translateInts.add(fromYDelta);
