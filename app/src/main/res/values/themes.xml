@@ -15,9 +15,14 @@
         <!-- Customize your theme here. -->
 
         <item name="android:buttonStyle">@style/MyButtons</item>
+
     </style>
 
     <style name="MyButtons">
         <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Button.Black" parent="ThemeOverlay.AppCompat">
+        <item name="android:backgroundTint">@color/black_coffee</item>
     </style>
 </resources>

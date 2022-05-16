@@ -5,10 +5,9 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:id="@+id/reviewCard"
-    app:cardElevation="2dp"
-    app:cardBackgroundColor="@color/green_pale"
-    app:strokeWidth="2dp"
-    app:strokeColor="@color/darkGrey">
+    app:cardElevation="5dp"
+    app:cardBackgroundColor="@color/black_coffee"
+    app:cardCornerRadius="5dp">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,6 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0"
+            android:textColor="@color/white"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -36,6 +36,7 @@
             android:layout_marginEnd="30dp"
             android:text="@string/review_text"
             android:textSize="20sp"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

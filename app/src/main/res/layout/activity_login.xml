@@ -6,12 +6,39 @@
     android:layout_height="match_parent"
     tools:context=".ui.view.LoginActivity">
 
+    <ImageView
+        android:id="@+id/blossomRed"
+        android:layout_width="500dp"
+        android:layout_height="500dp"
+
+        android:layout_marginTop="-200dp"
+        android:layout_marginEnd="-100dp"
+        android:alpha="0.5"
+        android:src="@drawable/blossom3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/blossomGreen"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:layout_marginEnd="-100dp"
+        android:layout_marginStart="-100dp"
+        android:layout_marginBottom="-100dp"
+        android:alpha="0.5"
+        android:rotation="70"
+        android:scaleY="-1"
+        android:src="@drawable/blossom4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
         android:id="@+id/registerTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
-        android:textSize="25dp"
+        android:textSize="30dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -79,6 +106,8 @@
         android:layout_height="wrap_content"
         android:paddingHorizontal="80dp"
         android:paddingVertical="10dp"
+        android:theme="@style/Button.Black"
+        android:textColor="@color/white"
         android:text="@string/loginBtn"
         android:visibility="visible"
         android:layout_marginTop="80dp"

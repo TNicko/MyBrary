@@ -7,12 +7,39 @@
     tools:context=".ui.view.MainActivity"
     android:background="@color/backgroundColor">
 
+    <ImageView
+        android:id="@+id/blossomRed"
+        android:layout_width="500dp"
+        android:layout_height="500dp"
+
+        android:layout_marginTop="-100dp"
+        android:layout_marginEnd="-100dp"
+        android:alpha="0.5"
+        android:src="@drawable/blossom3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/blossomGreen"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginEnd="-100dp"
+        android:layout_marginBottom="-100dp"
+        android:alpha="0.5"
+        android:rotation="100"
+        android:src="@drawable/blossom4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+
     <Button
         android:id="@+id/webViewBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/userGuide"
-        android:textColor="@color/black_coffee"
+        android:theme="@style/Button.Black"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_margin="10dp"/>
